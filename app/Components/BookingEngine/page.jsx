@@ -4,22 +4,20 @@ import React from "react";
 
 import CustomCalendar from "./CustomCalendar";
 import DoubleCalendar from "./DoubleCalender";
+import RoomSelector from "./RoomSelector"
 function Page() {
  
 
   
 
   return (
-    <div className="">
-      <div className="p-6 flex flex-col space-y-4 bg-opacity-55">
+    <div className=" ">
+      <div className="p-6 flex  space-x-6 bg-opacity-55">
         <form action="
         ">
-          <div className=" space-x-3">
 
-          <form action="">
-  <div className="space-x-3">
     <select
-      className="p-2 rounded-lg focus:outline-none"
+      className="p-2  focus:outline-none"
       defaultValue="" 
     >
       <option value="" disabled>
@@ -29,7 +27,7 @@ function Page() {
       <option value="apartment">Apartment</option>
     </select>
     <select
-      className="p-2 rounded-lg focus:outline-none"
+      className="p-2  focus:outline-none"
       defaultValue="" 
     >
       <option value="" disabled>
@@ -39,10 +37,7 @@ function Page() {
     </select>
 
 
-  </div>
-</form>
 
-          </div>
 
         </form>
 
@@ -53,6 +48,16 @@ function Page() {
 <div className=" hidden lg:block">
 
        <DoubleCalendar />
+</div>
+
+
+<div>
+  <RoomSelector />
+</div>
+
+<div className=" bg-blue-600 text-white flex items-center justify-center py-1  px-3 ">
+
+<button>Search</button>
 </div>
 
        

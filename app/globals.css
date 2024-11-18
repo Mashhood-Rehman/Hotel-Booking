@@ -19,7 +19,7 @@ ul {
     left: 0;
     bottom: -5px; 
     height: 2px; 
-    background-color: #c4a053;
+    background-color: blue;
     width: 0; 
     transition: width 0.3s ease-in-out; 
   }

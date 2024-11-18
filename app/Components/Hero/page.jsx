@@ -18,7 +18,6 @@ const Page = () => {
   return (
     <div className="-mt-36">
       <div className="relative h-screen bg-black">
-        {/* Background animation */}
         <motion.div
           key={currentImage}
           className="absolute inset-0 bg-center bg-cover"
@@ -33,7 +32,7 @@ const Page = () => {
         </motion.div>
 
 
-        <div className="absolute top-1/2 right-4 lg:right-64 transform -translate-y-1/2 z-10">
+        <div className="absolute flex items-center justify-center  -bottom-12 lg:left-32  backdrop-blur-lg bg-black bg-opacity-50 border-blue-600 border-4 rounded-md  z-10">
           <BookingEngine />
         </div>
       </div>

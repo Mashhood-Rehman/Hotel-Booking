@@ -19,6 +19,8 @@ id String @id @default(cuid())
   name  String
   city String
    price  String
+    startDate DateTime
+  endDate   DateTime
    status      BookingStatus @default(PENDING)
 }
 
@@ -27,6 +29,8 @@ id String @id @default(cuid())
   name  String
   city String
    price  String
+    startDate DateTime
+  endDate   DateTime
    status      BookingStatus @default(PENDING)
 }
 

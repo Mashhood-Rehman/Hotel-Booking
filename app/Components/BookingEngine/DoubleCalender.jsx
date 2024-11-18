@@ -58,15 +58,15 @@ const DoubleCalendar = () => {
   };
 
   return (
-    <div className="relative ">
+    <div className="relative  ">
       {/* Input Field */}
-      <div className="flex items-center    relative">
+      <div className="flex items-center    ">
         <input
           type="text"
           readOnly
           onClick={toggleCalendar}
           value={`${format(selectedStartDate, "dd-MM-yyyy")} - ${format(selectedEndDate, "dd-MM-yyyy")}`}
-          className="border p-2 rounded w-full focus:outline-none cursor-pointer " 
+          className="border p-2 w-[25vw]  focus:outline-none cursor-pointer " 
         />
         {/* Cross Button */}
         <button
@@ -79,7 +79,7 @@ const DoubleCalendar = () => {
 
       {/* Calendar Tab (appears on input click) */}
       {calendarOpen && (
-        <div className="absolute  left-0 bg-white shadow-lg  p-4  z-10 w-[45vw]     transition-all duration-300">
+        <div className="absolute   bg-white shadow-lg  p-4  z-10 w-[45vw]     transition-all duration-300">
           {/* Flexbox container to display calendars side by side */}
           <div className="flex justify-between space-x-4">
             {/* Start Calendar */}

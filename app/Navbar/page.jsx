@@ -29,17 +29,16 @@ const Page = () => {
         {/* Logo */}
         <div>
           <Link href="/">
-            <Image src="/LH.png" alt="lvh pic" height={100} width={100} />
+            <Image src="/Mainlogo (1).png" className=" " alt="lvh pic" height={100} width={100} />
           </Link>
         </div>
 
-        {/* Desktop navigation (hidden on mobile) */}
         <ul className="hidden md:flex justify-between items-center">
           {navdData.map((item, index) => (
             <li key={index} className="relative text-white mx-4 group">
               <Link
                 href={item.href}
-                className="relative z-10 hover:text-[#c4a053]"
+                className="relative z-10 hover:text-blue-600"
               >
                 {item.name}
               </Link>
@@ -49,7 +48,7 @@ const Page = () => {
         </ul>
         <div>
           <Link href="/Contact">
-            <button className="text-black hidden lg:block hover:scale-110 duration-300 ease-in-out bg-[#c4a053] py-2 px-4">
+            <button className=" hidden lg:block hover:scale-110 duration-300 ease-in-out bg-blue-600 text-white py-2 px-4">
               Book Now
             </button>
           </Link>
