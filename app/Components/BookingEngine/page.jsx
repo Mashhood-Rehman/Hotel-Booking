@@ -1,20 +1,16 @@
 "use client";
 
-import React from "react";
 
 import CustomCalendar from "./CustomCalendar";
 import DoubleCalendar from "./DoubleCalender";
 import RoomSelector from "./RoomSelector"
-function Page() {
+ function Page() {  
  
-
-  
 
   return (
     <div className=" ">
       <div className="p-6 flex  space-x-6 bg-opacity-55">
-        <form action="
-        ">
+        <form action="" className=" flex space-x-4">
 
     <select
       className="p-2  focus:outline-none"
@@ -39,7 +35,6 @@ function Page() {
 
 
 
-        </form>
 
        <div className=" block lg:hidden">
 
@@ -57,9 +52,10 @@ function Page() {
 
 <div className=" bg-blue-600 text-white flex items-center justify-center py-1  px-3 ">
 
-<button>Search</button>
+<button type="submit">Search</button>
 </div>
 
+        </form>
        
       </div>
     </div>

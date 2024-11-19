@@ -20,7 +20,7 @@ export async function createAccomodation(data : {type :  'hotel' | 'apartment' ,
                 price: data.price,
                 status : data.status,
                 startDate: new Date(data.startDate),  
-                endDate: new Date(data.endDate),      // Ensure endDate is a Date object
+                endDate: new Date(data.endDate),      
             }
         })
         return accomodation
