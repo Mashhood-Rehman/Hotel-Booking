@@ -29,7 +29,7 @@ export default function RoomSelector() {
             <span>Rooms:</span>
             <div>
               <button
-                type="button"  // Prevent form submission
+                type="button" // Prevent form submission
                 className="px-2 py-1 border rounded-md"
                 onClick={() => setRooms((prev) => Math.max(1, prev - 1))}
               >
@@ -37,7 +37,7 @@ export default function RoomSelector() {
               </button>
               <span className="px-3">{rooms}</span>
               <button
-                type="button"  // Prevent form submission
+                type="button" // Prevent form submission
                 className="px-2 py-1 border rounded-md"
                 onClick={() => setRooms((prev) => prev + 1)}
               >
@@ -49,7 +49,7 @@ export default function RoomSelector() {
             <span>Adults:</span>
             <div>
               <button
-                type="button"  // Prevent form submission
+                type="button" // Prevent form submission
                 className="px-2 py-1 border rounded-md"
                 onClick={() => setAdults((prev) => Math.max(1, prev - 1))}
               >
@@ -57,7 +57,7 @@ export default function RoomSelector() {
               </button>
               <span className="px-3">{adults}</span>
               <button
-                type="button"  // Prevent form submission
+                type="button" // Prevent form submission
                 className="px-2 py-1 border rounded-md"
                 onClick={() => setAdults((prev) => prev + 1)}
               >

@@ -1,7 +1,22 @@
 import { searchAccomodation } from '@/lib/action';
+import cors from '@/lib/cors';
 import { NextApiRequest, NextApiResponse } from 'next';
 
+async function runCors(req: NextApiRequest, res: NextApiResponse) {
+  return new Promise((resolve, reject) => {
+    cors(req, res, (result) => {
+      if (result instanceof Error) {
+        return reject(result);
+      }
+      return resolve(result);
+    });
+  });
+}
+
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  // First run the CORS middleware
+  await runCors(req, res);
+
   if (req.method === 'GET') {
     try {
       const { city, type } = req.query;
