@@ -5,7 +5,6 @@ function ListPage({ data, city, type }) {
   const [results, setResults] = useState(data);
 
   useEffect(() => {
-    // Optionally, you can update the results if props change
     setResults(data);
   }, [data]);
 
