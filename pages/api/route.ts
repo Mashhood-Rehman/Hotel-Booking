@@ -1,10 +1,7 @@
 import { createAccomodation } from "@/lib/action";
+import { cors } from "@/lib/cors";
 import { BookingStatus } from "@prisma/client";
 import { NextApiRequest, NextApiResponse } from "next";
-import { createAccomodation } from '@/lib/action';
-import { cors } from '@/lib/cors';
-import { BookingStatus } from '@prisma/client';
-import { NextApiRequest, NextApiResponse } from 'next';
 
 // Function to run CORS middleware
 async function runCors(req: NextApiRequest, res: NextApiResponse) {
@@ -34,24 +31,10 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  if (req.method === "POST") {
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   await runCors(req, res);
 
-  if (req.method === 'POST') {
+  if (req.method === "POST") {
     try {
-      console.log("Request body:", req.body);
-
-      const {
-        type,
-        name,
-        city,
-        price,
-        startDate,
-        endDate,
-        status = BookingStatus.PENDING,
-      }: CreateAccommodationRequest = req.body;
-
       const {
         type,
         name,
@@ -61,13 +44,20 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         endDate,
         rooms,
         people,
-        status = BookingStatus.PENDING
+        status = BookingStatus.PENDING,
       }: CreateAccommodationRequest = req.body;
 
-      if (!type || !name || !city || !price || !startDate || !endDate) {
+      if (
+        !type ||
+        !name ||
+        !city ||
+        !price ||
+        !startDate ||
+        !endDate ||
+        !rooms ||
+        !people
+      ) {
         return res.status(400).json({ message: "Missing required fields" });
-      if (!type || !name || !city || !price || !startDate || !endDate || !rooms || !people) {
-        return res.status(400).json({ message: 'Missing required fields' });
       }
 
       const accommodation = await createAccomodation({
@@ -78,24 +68,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         startDate,
         endDate,
         status,
+        rooms,
+        people,
       });
 
       return res
         .status(201)
         .json({ message: "Successfully created accommodation", accommodation });
-      const accommodation = await createAccomodation({ 
-        type, 
-        name, 
-        city, 
-        price, 
-        startDate, 
-        endDate, 
-        status, 
-        rooms, 
-        people 
-      });
-
-      return res.status(201).json({ message: "Successfully created accommodation", accommodation });
     } catch (error) {
       console.error("Error creating accommodation:", error);
       return res
