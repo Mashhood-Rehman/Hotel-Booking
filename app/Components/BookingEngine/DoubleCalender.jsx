@@ -42,16 +42,26 @@ const DoubleCalendar = () => {
     const endOfMonthDate = endOfMonth(selectedDate);
 
     // Get days from the start of the month to the end of the month
-    for (let i = startOfMonthDate.getDate(); i <= endOfMonthDate.getDate(); i++) {
-      const currentDay = new Date(selectedDate.getFullYear(), selectedDate.getMonth(), i);
+    for (
+      let i = startOfMonthDate.getDate();
+      i <= endOfMonthDate.getDate();
+      i++
+    ) {
+      const currentDay = new Date(
+        selectedDate.getFullYear(),
+        selectedDate.getMonth(),
+        i
+      );
       const isSelected = currentDay >= range.start && currentDay <= range.end;
 
       days.push(
         <button
           key={i}
-          type="button"  // Prevent form submission
+          type="button" // Prevent form submission
           onClick={() => handleDateClick(currentDay)}
-          className={`p-2 rounded ${isSelected ? "bg-blue-600 text-white" : "text-black"} cursor-pointer`}
+          className={`p-2 rounded ${
+            isSelected ? "bg-blue-600 text-white" : "text-black"
+          } cursor-pointer`}
         >
           {i}
         </button>
@@ -78,7 +88,10 @@ const DoubleCalendar = () => {
           type="text"
           readOnly
           onClick={toggleCalendar}
-          value={`${format(selectedStartDate, "dd-MM-yyyy")} - ${format(selectedEndDate, "dd-MM-yyyy")}`}
+          value={`${format(selectedStartDate, "dd-MM-yyyy")} - ${format(
+            selectedEndDate,
+            "dd-MM-yyyy"
+          )}`}
           className="border p-2 w-[25vw] focus:outline-none cursor-pointer"
         />
         {/* Cross Button */}
@@ -98,25 +111,32 @@ const DoubleCalendar = () => {
               <div className="flex p-2 justify-between items-center">
                 <button
                   type="button"
-                  onClick={() => handleMonthChange(true, -1)} 
+                  onClick={() => handleMonthChange(true, -1)}
                 >
                   Prev
                 </button>
-                <span className="text-xs">{format(selectedStartDate, "MMMM yyyy")}</span>
+                <span className="text-xs">
+                  {format(selectedStartDate, "MMMM yyyy")}
+                </span>
                 <button
                   type="button"
-                  onClick={() => handleMonthChange(true, 1)} 
+                  onClick={() => handleMonthChange(true, 1)}
                 >
                   Next
                 </button>
               </div>
 
               <div className="grid grid-cols-7">
-                {["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"].map((day) => (
-                  <div key={day} className="text-center p-4 font-semibold text-xs text-gray-600">
-                    {day}
-                  </div>
-                ))}
+                {["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"].map(
+                  (day) => (
+                    <div
+                      key={day}
+                      className="text-center p-4 font-semibold text-xs text-gray-600"
+                    >
+                      {day}
+                    </div>
+                  )
+                )}
                 {renderCalendarDays(selectedStartDate, handleStartDateClick)}
               </div>
             </div>
@@ -125,25 +145,32 @@ const DoubleCalendar = () => {
               <div className="flex p-2 justify-between items-center">
                 <button
                   type="button"
-                  onClick={() => handleMonthChange(false, -1)} 
+                  onClick={() => handleMonthChange(false, -1)}
                 >
                   Prev
                 </button>
-                <span className="text-xs">{format(selectedEndDate, "MMMM yyyy")}</span>
+                <span className="text-xs">
+                  {format(selectedEndDate, "MMMM yyyy")}
+                </span>
                 <button
                   type="button"
-                  onClick={() => handleMonthChange(false, 1)} 
+                  onClick={() => handleMonthChange(false, 1)}
                 >
                   Next
                 </button>
               </div>
 
               <div className="grid grid-cols-7">
-                {["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"].map((day) => (
-                  <div key={day} className="text-center font-semibold p-4 text-xs text-gray-600">
-                    {day}
-                  </div>
-                ))}
+                {["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"].map(
+                  (day) => (
+                    <div
+                      key={day}
+                      className="text-center font-semibold p-4 text-xs text-gray-600"
+                    >
+                      {day}
+                    </div>
+                  )
+                )}
                 {renderCalendarDays(selectedEndDate, handleEndDateClick)}
               </div>
             </div>
