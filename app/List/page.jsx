@@ -10,7 +10,7 @@ function ListPage({ data, city, type }) {
   }, [data]);
 
   return (
-    <div>
+    <div className=" text-gray-300 text-3xl">
       <h1>
         Results for {city} - {type}
       </h1>
