@@ -38,7 +38,6 @@ function Page() {
       setIsSearched(true);
 
       if (response.data && response.data.length > 0) {
-        // Use queryString to construct the URL with query parameters
         const query = queryString.stringify({ city, type });
         router.push(`/Results?${query}`); // Redirect to Results page with query parameters
       } else {

@@ -1,8 +1,6 @@
-import Cors from 'cors';
+import Cors from "cors";
 
-const cors = Cors({
-  methods: ['GET', 'POST', 'OPTIONS'], 
-  origin: '*', 
+export const cors = Cors({
+  methods: ["GET", "POST", "OPTIONS"],
+  origin: "*",
 });
-
-export default cors;
