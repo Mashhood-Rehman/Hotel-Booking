@@ -28,7 +28,7 @@ enum AccommodationType {
           name: data.name,
           city: data.city,
           price: data.price,
-          rooms: data.rooms,           // Set rooms
+          rooms: data.rooms,           
           people: data.people,         // Set people
           status: data.status || BookingStatus.PENDING,  // Set status (default to PENDING)
           startDate: new Date(data.startDate),
