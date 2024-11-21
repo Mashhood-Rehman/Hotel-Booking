@@ -2,15 +2,13 @@ import { createAccomodation } from "@/lib/action";
 import { cors } from "@/lib/cors";
 import { BookingStatus } from "@prisma/client";
 import { NextApiRequest, NextApiResponse } from "next";
-
-// Function to run CORS middleware
 async function runCors(req: NextApiRequest, res: NextApiResponse) {
   return new Promise((resolve, reject) => {
     cors(req, res, (result) => {
       if (result instanceof Error) {
         return reject(result);
       }
-      return resolve(result);
+      resolve(result); // Make sure to resolve or handle success properly
     });
   });
 }
