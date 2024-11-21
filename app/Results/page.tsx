@@ -106,7 +106,7 @@ function Results() {
   return (
     <div className="text-gray-300 text-3xl">
       <h1>
-        Results for {city} - {type}
+        Results for {city} -- {type}
       </h1>
       {error && <p className="text-red-500 text-center">{error}</p>}
       {loading ? (
