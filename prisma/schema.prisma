@@ -18,39 +18,17 @@ model Hotel {
 id String @id @default(cuid())
   name  String
   city String
-   price  String
-    people    Int      
-  rooms     Int      
-    startDate DateTime
-  endDate   DateTime
-   status      BookingStatus @default(PENDING)
+picture String
+link String
 }
 
 model Apartment {
 id String @id @default(cuid())
   name  String
   city String
-   people    Int      
-  rooms     Int      
-   price  String
-    startDate DateTime
-  endDate   DateTime
-   status      BookingStatus @default(PENDING)
-}
-
-
-model Booking {
-id String @id @default(cuid())
-  username String
-  startDate  DateTime
-  endDate DateTime 
-   people    Int      
-  rooms     Int      
+  picture String
+      link String
 
 }
 
-enum BookingStatus {
-  PENDING
-  CONFIRMED
-  CANCELLED
-}
+
