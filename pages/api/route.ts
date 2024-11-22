@@ -1,72 +1,76 @@
-import { createAccomodation } from '@/lib/action';
-import { cors } from '@/lib/cors';
-import { BookingStatus } from '@prisma/client';
+import prisma from '@/lib/action';
 import { NextApiRequest, NextApiResponse } from 'next';
+import upload from '@/lib/multer'; 
+import { uploads } from '@/lib/cloudinary';  
 
-// Function to run CORS middleware
-async function runCors(req: NextApiRequest, res: NextApiResponse) {
+const multerMiddleware = upload.single('picture');  // 'picture' must match the field name in the form
+
+function runMiddleware(req: NextApiRequest, res: NextApiResponse, fn: Function) {
   return new Promise((resolve, reject) => {
-    cors(req, res, (result) => {
+    fn(req, res, (result: any) => {
       if (result instanceof Error) {
         return reject(result);
       }
-      return resolve(result);
+      resolve(result);
     });
   });
 }
-
-type CreateAccommodationRequest = {
-  type: 'hotel' | 'apartment';
-  name: string;
-  city: string;
-  price: string;
-  startDate: string;
-  endDate: string;
-  status?: BookingStatus;
-  rooms: number;
-  people: number;
-};
-
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  await runCors(req, res);
+    if (req.method === 'POST') {
+        try {
+            await runMiddleware(req, res, multerMiddleware);
+            console.log('Request body:', req.body);   // Log body data
+            console.log('File object:', req.file);    // Log file data
 
-  if (req.method === 'POST') {
-    try {
+            const { type, name, city, link } = req.body;
+            const file = req.file;
 
-      const {
-        type,
-        name,
-        city,
-        price,
-        startDate,
-        endDate,
-        rooms,
-        people,
-        status = BookingStatus.PENDING
-      }: CreateAccommodationRequest = req.body;
+            if (!type || !name || !city || !link || !file) {
+                return res.status(400).json({ message: 'Missing required fields or file' });
+            }
 
-      if (!type || !name || !city || !price || !startDate || !endDate || !rooms || !people) {
-        return res.status(400).json({ message: 'Missing required fields' });
-      }
+            const picture = `data:${file.mimetype};base64,${file.buffer.toString('base64')}`;
 
-      const accommodation = await createAccomodation({ 
-        type, 
-        name, 
-        city, 
-        price, 
-        startDate, 
-        endDate, 
-        status, 
-        rooms, 
-        people 
-      });
+            let accommodation;
 
-      return res.status(201).json({ message: "Successfully created accommodation", accommodation });
-    } catch (error) {
-      console.error('Error creating accommodation:', error);
-      return res.status(500).json({ message: 'Failed to create accommodation' });
+            if (type === 'hotel') {
+                accommodation = await prisma.hotel.create({
+                    data: {
+                        name,
+                        city,
+                        picture,
+                        link,
+                    },
+                });
+            } else if (type === 'apartment') {
+                accommodation = await prisma.apartment.create({
+                    data: {
+                        name,
+                        city,
+                        picture,
+                        link,
+                    },
+                });
+            } else {
+                return res.status(400).json({ message: 'Invalid type. Must be "hotel" or "apartment".' });
+            }
+
+            return res.status(201).json({
+                message: 'Successfully uploaded picture and created entry',
+                accommodation,
+            });
+        } catch (error) {
+            console.error('Error uploading picture:', error);
+            return res.status(500).json({ message: 'Failed to upload picture', error: error.message });
+        }
+    } else {
+        return res.status(405).json({ message: 'Method Not Allowed' });
     }
-  } else {
-    return res.status(405).json({ message: 'Method Not Allowed' });
-  }
 }
+
+  
+  export const config = {
+    api: {
+      bodyParser: false,  
+    },
+  };
