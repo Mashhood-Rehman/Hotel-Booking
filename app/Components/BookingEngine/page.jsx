@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation"; // Added useRouter hook for navigation
+import queryString from "query-string";
 import CustomCalendar from "./CustomCalendar";
 import DoubleCalendar from "./DoubleCalender";
 import RoomSelector from "./RoomSelector";
@@ -8,6 +10,7 @@ import axios from "axios";
 import List from "../../List/page";
 
 function Page() {
+  const router = useRouter(); // Initialize useRouter for redirection
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [data, setData] = useState([]);
@@ -16,8 +19,15 @@ function Page() {
   const [isSearched, setIsSearched] = useState(false);
 
   const handleSearch = async () => {
+    // Validate city and type selection
+    if (!city || !type) {
+      setError("Please select a city and type.");
+      return;
+    }
+
     setLoading(true);
     setIsSearched(false);
+    setError("");
 
     try {
       const response = await axios.get(
@@ -26,6 +36,13 @@ function Page() {
       setData(response.data);
       setLoading(false);
       setIsSearched(true);
+
+      if (response.data && response.data.length > 0) {
+        const query = queryString.stringify({ city, type });
+        router.push(`/Results?${query}`); // Redirect to Results page with query parameters
+      } else {
+        setError("No results found!");
+      }
     } catch (error) {
       setLoading(false);
       setError(error.message || "Something went wrong!");
@@ -77,8 +94,6 @@ function Page() {
           </div>
         </form>
       </div>
-
-      {isSearched && <List data={data} city={city} type={type} />}
 
       {error && <p className="text-red-500 mt-4">{error}</p>}
     </div>
