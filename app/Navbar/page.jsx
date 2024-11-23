@@ -29,7 +29,13 @@ const Page = () => {
         {/* Logo */}
         <div>
           <Link href="/">
-            <Image src="/Mainlogo (1).png" className=" " alt="lvh pic" height={100} width={100} />
+            <Image
+              src="/Mainlogo (1).png"
+              className=" "
+              alt="lvh pic"
+              height={100}
+              width={100}
+            />
           </Link>
         </div>
 

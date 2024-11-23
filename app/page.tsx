@@ -8,7 +8,7 @@ export default function Home() {
       <div>
         <Hero />
         <Cities />
-        <About />
+        <AboutUs />
         <Testimonials />
       </div>
     </>
