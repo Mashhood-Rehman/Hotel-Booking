@@ -10,9 +10,9 @@ const Page = () => {
   useEffect(() => {
     const updateVisibleCards = () => {
       if (window.innerWidth < 768) {
-        setVisibleCards(1); // 1 card visible for small screens
+        setVisibleCards(1);
       } else {
-        setVisibleCards(3); // 3 cards visible for large screens
+        setVisibleCards(3);
       }
     };
 
@@ -36,7 +36,7 @@ const Page = () => {
   return (
     <div>
       <main className="mt-36">
-        <div className="flex flex-col items-center justify-center space-y-5 text-lg lg:text-3xl ">
+        <div className="flex flex-col items-center justify-center space-y-5 text-lg lg:text-3xl">
           <h1>Cities</h1>
           <span className="text-sm lg:text-xl">
             Select the city and get the hotels
@@ -61,28 +61,31 @@ const Page = () => {
               />
             </button>
 
-            <div
-              className={`grid gap-4 overflow-hidden w-full max-w-5xl grid-cols-3 sm:grid-cols-${visibleCards} md:grid-cols-${visibleCards}`}
-            >
+            <div className="grid gap-4 overflow-hidden w-full max-w-5xl grid-cols-3 sm:grid-cols-1 md:grid-cols-3">
               {RoomCards.slice(currentIndex, currentIndex + visibleCards).map(
                 (card, index) => (
                   <div
                     key={index}
                     className="flex flex-col justify-center items-center mt-4"
                   >
-                    <div className="font-sans overflow-hidden flex flex-col">
-                      {/* Image Section */}
-                      <div className="relative w-64 h-auto">
-                        <Image
-                          height={150}
-                          width={150}
-                          src={card.Imgsrc}
-                          alt={card.name}
-                          className="w-full h-auto object-cover rounded-full"
-                          quality={100}
-                        />
-                      </div>
+                    <div
+                      className={`relative ${
+                        index === 1 ? "w-48 h-64" : "w-64 h-48"
+                      }`}
+                    >
+                      <Image
+                        src={card.Imgsrc}
+                        alt={card.name}
+                        fill
+                        className={`object-cover ${
+                          index === 1
+                            ? "rounded-full aspect-[1/2]"
+                            : "rounded-[50%] aspect-[3/2]"
+                        }`}
+                        quality={100}
+                      />
                     </div>
+
                     {/* Card Content Section */}
                     <div className="p-4 text-center">
                       <h3 className="text-xl font-bold">{card.name}</h3>
@@ -95,6 +98,7 @@ const Page = () => {
               )}
             </div>
 
+            {/* Next Button */}
             <button
               onClick={handleNext}
               disabled={currentIndex >= RoomCards.length - visibleCards}
