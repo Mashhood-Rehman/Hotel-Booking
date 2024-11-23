@@ -1,78 +1,16 @@
-// "use client";
-// import { useSearchParams } from "next/navigation";
-// import { useEffect, useState } from "react";
-// import axios from "axios";
-
-// function Results() {
-//   const searchParams = useSearchParams();
-//   const city = searchParams.get("city");
-//   const type = searchParams.get("type");
-
-//   const [results, setResults] = useState([]);
-
-//   useEffect(() => {
-//     const fetchData = async () => {
-//       try {
-//         const response = await axios.get(
-//           `http://localhost:3000/api/search?city=${city}&type=${type}`
-//         );
-//         setResults(response.data);
-//       } catch (error) {
-//         console.error("Failed to fetch results:", error);
-//       }
-//     };
-
-//     if (city && type) fetchData();
-//   }, [city, type]);
-
-//   return (
-//     <div className="text-gray-300  text-3xl">
-//       <h1>
-//         Results for {city} - {type}
-//       </h1>
-//       <div>
-//         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4">
-//           {results && results.length > 0 ? (
-//             results.map((item, index) => (
-//               <div
-//                 key={index}
-//                 className="bg-white shadow-xl rounded-lg p-4 border border-gray-200 hover:shadow-lg transition duration-300"
-//               >
-//                 <h2 className="text-lg font-bold text-gray-700">{item.name}</h2>
-//                 <p className="text-sm text-gray-500 mt-2">
-//                   <span className="font-medium">Price:</span> ${item.price}
-//                 </p>
-//                 <p className="text-sm text-gray-500">
-//                   <span className="font-medium">City:</span> {item.city}
-//                 </p>
-
-//                 <button className="mt-4 w-full bg-blue-600 text-white py-2 text-sm rounded-md hover:bg-blue-700 transition">
-//                   View Details
-//                 </button>
-//               </div>
-//             ))
-//           ) : (
-//             <p className="text-gray-600 text-center col-span-full">
-//               No results found.
-//             </p>
-//           )}
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }
-
-// export default Results;
-
 "use client";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import Image from "next/image";
+import Link from "next/link";
 
 type ResultItem = {
   name: string;
   price: number | string;
   city: string;
+  picture: string;
+  link: string;
 };
 
 function Results() {
@@ -104,35 +42,52 @@ function Results() {
   }, [city, type]);
 
   return (
-    <div className="text-gray-300 text-3xl">
-      <h1>
-        Results for {city} --- {type}
+    <div className="min-h-screen  text-gray-200 py-8 px-4">
+      <h1 className="text-4xl text-blue-400 font-bold text-center mb-8">
+        Results for
+        <span className=" ml-2">{type}s in </span>
+        <span className="">{city}</span>
       </h1>
-      {error && <p className="text-red-500 text-center">{error}</p>}
+      {error && (
+        <p className="text-red-500 text-center text-lg mb-4">{error}</p>
+      )}
       {loading ? (
-        <p className="text-center text-gray-500">Loading...</p>
+        <p className="text-center text-gray-400 text-xl">Loading...</p>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {results.length > 0 ? (
             results.map((item, index) => (
               <div
                 key={index}
-                className="bg-white shadow-xl rounded-lg p-4 border border-gray-200 hover:shadow-lg transition duration-300"
+                className="bg-gray-700 rounded-lg overflow-hidden shadow-lg transform transition hover:scale-105 hover:shadow-2xl"
               >
-                <h2 className="text-lg font-bold text-gray-700">{item.name}</h2>
-                <p className="text-sm text-gray-500 mt-2">
-                  <span className="font-medium">Price:</span> ${item.price}
-                </p>
-                <p className="text-sm text-gray-500">
-                  <span className="font-medium">City:</span> {item.city}
-                </p>
-                <button className="mt-4 w-full bg-blue-600 text-white py-2 text-sm rounded-md hover:bg-blue-700 transition">
-                  View Details
-                </button>
+                <div className="relative w-full h-48">
+                  <Image
+                    src={item.picture}
+                    alt={`Image of ${item.name}`}
+                    layout="fill"
+                    objectFit="cover"
+                    className="rounded-t-lg"
+                  />
+                </div>
+                <div className="p-4">
+                  <h2 className="text-xl font-semibold mb-2 text-white">
+                    {item.name}
+                  </h2>
+                  <p className="text-sm text-gray-300 mb-2">
+                    <span className="font-medium">City:</span> {item.city}
+                  </p>
+
+                  <Link href={item.link} target="_blank">
+                    <button className="w-full bg-blue-600 text-white py-2 rounded-md font-medium hover:bg-blue-700 transition duration-300">
+                      View Details
+                    </button>
+                  </Link>
+                </div>
               </div>
             ))
           ) : (
-            <p className="text-gray-600 text-center col-span-full">
+            <p className="text-gray-400 text-center text-lg col-span-full">
               No results found.
             </p>
           )}
