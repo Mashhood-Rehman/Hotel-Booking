@@ -51,14 +51,12 @@ const Testimonials: React.FC = () => {
 
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  // Move to the previous testimonial
   const handlePrev = () => {
     setCurrentIndex((prevIndex) =>
       prevIndex > 0 ? prevIndex - 1 : testimonials.length - 3
     );
   };
 
-  // Move to the next testimonial
   const handleNext = () => {
     setCurrentIndex((prevIndex) =>
       prevIndex < testimonials.length - 3 ? prevIndex + 1 : 0
@@ -76,14 +74,12 @@ const Testimonials: React.FC = () => {
           </div>
 
           <div className="flex space-x-4 items-end justify-end">
-            {/* Previous Button */}
             <div
               className="bg-gray-200 w-10 h-10 grid items-center justify-center rounded-full rotate-90 shrink-0 cursor-pointer"
               onClick={handlePrev}
             >
               <Icon icon="mdi:chevron-down" className="text-gray-800 text-lg" />
             </div>
-            {/* Next Button */}
             <div
               className="bg-blue-600 w-10 h-10 grid items-center justify-center rounded-full -rotate-90 shrink-0 cursor-pointer"
               onClick={handleNext}
@@ -128,7 +124,6 @@ const Testimonials: React.FC = () => {
                   </p>
                 </div>
 
-                {/* Star Ratings */}
                 <div className="flex space-x-1 mt-4">
                   {Array.from({ length: 5 }).map((_, starIndex) => (
                     <Icon
