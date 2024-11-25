@@ -10,7 +10,7 @@ const Page = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentImage((prevImage) => (prevImage + 1) % images.length);
-    }, 5000); 
+    }, 5000);
 
     return () => clearInterval(interval);
   }, []);
@@ -30,7 +30,6 @@ const Page = () => {
         >
           <div className="absolute inset-0 bg-black opacity-50"></div>
         </motion.div>
-
 
         <div className="absolute flex items-center justify-center  -bottom-12 lg:left-32  backdrop-blur-lg bg-black bg-opacity-50 border-blue-600 border-4 rounded-md  z-10">
           <BookingEngine />
