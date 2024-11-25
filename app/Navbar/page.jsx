@@ -7,13 +7,17 @@ import Sidebar from "./Sidebar";
 
 const Page = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
-  const [bgColor, setBgColor] = useState("transparent");
+  const [bgColor, setBgColor] = useState("bg-black");
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 50) {
-        setBgColor("bg-black");
-      } else {
-        setBgColor("bg-transparent");
+      if (location.pathname === "/") {
+        if (window.innerWidth >= 1140) {
+          if (window.scrollY > 50) {
+            setBgColor("bg-black");
+          } else {
+            setBgColor("bg-transparent");
+          }
+        }
       }
     };
     window.addEventListener("scroll", handleScroll);
