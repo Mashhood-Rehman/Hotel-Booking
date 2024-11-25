@@ -106,8 +106,8 @@ const ImageModal = ({ isOpen, onClose, initialIndex }) => {
           <Image
             src={GalleryPage[currentIndex].Imgsrc}
             alt={GalleryPage[currentIndex].alt}
-            width={500} // Adjusted width for mobile
-            height={400} // Adjusted height for mobile
+            width={500}
+            height={400}
             className="rounded-lg object-cover transition-opacity duration-300 ease-in-out mx-4"
           />
           <button

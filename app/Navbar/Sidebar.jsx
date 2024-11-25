@@ -7,15 +7,15 @@ import Link from "next/link";
 const Sidebar = ({ isOpen, toggleSidebar }) => {
   return (
     <motion.div
-      initial={{ x: "100%", opacity: 0 }}  // Start with sidebar off-screen and invisible
-      animate={{ x: isOpen ? 0 : "100%", opacity: isOpen ? 1 : 0 }}  // Slide in with fade-in effect
-      transition={{ type: "tween", ease: "easeOut", duration: 0.5 }}  // Smooth ease-out transition
+      initial={{ x: "100%", opacity: 0 }}
+      animate={{ x: isOpen ? 0 : "100%", opacity: isOpen ? 1 : 0 }}
+      transition={{ type: "tween", ease: "easeOut", duration: 0.5 }}
       className="fixed top-0 right-0 w-2/3 h-full bg-black text-white z-30 md:hidden"
     >
       {/* Close button */}
       <div className="p-4 flex justify-end">
         <button onClick={toggleSidebar} className="text-white text-2xl">
-          &times; {/* Close icon (X) */}
+          &times;
         </button>
       </div>
 

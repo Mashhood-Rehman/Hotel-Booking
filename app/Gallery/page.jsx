@@ -9,8 +9,8 @@ const Page = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const openModal = (index) => {
-    setCurrentIndex(index);
     setIsModalOpen(true);
+    setCurrentIndex(index);
   };
 
   const closeModal = () => {
@@ -25,7 +25,6 @@ const Page = () => {
         </div>
 
         <section className="relative">
-          {/* Grid layout for gallery */}
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-6">
             {GalleryPage.map((card, index) => (
               <div
@@ -42,7 +41,6 @@ const Page = () => {
                     className="h-32 w-64 sm:h-auto sm:w-full transition-transform duration-500 ease-in-out transform group-hover:scale-110 object-center rounded-t-lg cursor-pointer"
                     quality={100}
                   />
-
                   <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-50 transition-opacity duration-300 rounded-t-lg"></div>
                 </div>
               </div>
@@ -51,7 +49,6 @@ const Page = () => {
         </section>
       </main>
 
-      {/* Modal Component */}
       <ImageModal
         isOpen={isModalOpen}
         onClose={closeModal}
