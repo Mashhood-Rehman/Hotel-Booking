@@ -57,16 +57,14 @@ const Page = () => {
           ))}
         </ul>
         <div>
-          <Link href="/Contact">
+          <Link href="/SignUp">
             <button className=" hidden lg:block hover:scale-110 duration-300 ease-in-out bg-blue-600 text-white py-2 px-4">
-              Book Now
+              SignUp
             </button>
           </Link>
         </div>
-        {/* Mobile hamburger menu button */}
         <div className="md:hidden flex items-center ">
           <button onClick={toggleSidebar} className="text-white p-2">
-            {/* Hamburger icon (three lines) */}
             <span className="block w-6 h-0.5 bg-white mb-1"></span>
             <span className="block w-6 h-0.5 bg-white mb-1"></span>
             <span className="block w-6 h-0.5 bg-white mb-1"></span>
