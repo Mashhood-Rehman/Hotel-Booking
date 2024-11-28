@@ -13,10 +13,10 @@ const Page = () => {
       .then((data) => setPage(data));
   }, []);
 
-  const deleteHotel = (id) => {
+  const deleteUser = (id) => {
     // Placeholder for DELETE request
     fetch(`/api/Page/${id}`, { method: "DELETE" }).then(() =>
-      setPage(Page.filter((hotel) => hotel.id !== id))
+      setPage(Page.filter((user) => user.id !== id))
     );
   };
 
@@ -45,19 +45,20 @@ const Page = () => {
           </tr>
         </thead>
         <tbody>
-          {Page.map((hotel) => (
+          {Page.map((user) => (
             <tr key={hotel.id} className="border-b">
-              <td className="p-4">{hotel.id}</td>
-              <td className="p-4">{hotel.name}</td>
+              <td className="p-4">{user.id}</td>
+              <td className="p-4">{user.name}</td>
+              <td className="p-4">{user.email}</td>
               <td className="p-4">
                 <a
-                  href={`/admin/Page/edit?id=${hotel.id}`}
+                  href={`/admin/Page/edit?id=${user.id}`}
                   className="text-blue-500 mr-4"
                 >
                   Edit
                 </a>
                 <button
-                  onClick={() => deleteHotel(hotel.id)}
+                  onClick={() => deleteUser(user.id)}
                   className="text-red-500"
                 >
                   Delete
