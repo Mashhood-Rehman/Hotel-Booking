@@ -1,5 +1,5 @@
 // pages/admin/hotels/edit.jsx
-import Admin from "../../components/AdminLayout";
+import Admin from "../../../../components/AdminLayout";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 

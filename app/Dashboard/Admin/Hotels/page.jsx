@@ -1,5 +1,6 @@
 "use client";
-import AdminLayout from "@/app/Components/AdminLayout";
+import AdminLayout from "../../../../components/AdminLayout";
+
 import { useEffect, useState } from "react";
 
 const Page = () => {

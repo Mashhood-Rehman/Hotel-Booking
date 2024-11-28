@@ -1,6 +1,6 @@
 "use client";
-import AdminLayout from "@/app/Components/AdminLayout";
 import { useState, useEffect } from "react";
+import AdminLayout from "../../../../components/AdminLayout";
 
 const Page = () => {
   const [appartments, setAppartments] = useState([]);

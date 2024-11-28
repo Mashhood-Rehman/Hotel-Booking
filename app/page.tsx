@@ -1,12 +1,12 @@
 import About from "./About/page";
-import Cities from "./Components/Cities/page";
-import Hero from "./Components/Hero/page";
-import Testimonials from "./Components/Testimonial/page";
+import Testimonials from "./Testimonial/page";
+import Cities from "./Cities/page";
+import Header from "./Header/page";
 export default function Home() {
   return (
     <>
       <div>
-        <Hero />
+        <Header />
         <Cities />
         <About />
         <Testimonials />

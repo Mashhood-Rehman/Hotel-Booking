@@ -1,9 +1,10 @@
 import React from "react";
-import Navbar from "../../components/(Header)/Navbar";
+import SignUpForm from "../../../components/form/SignUpForm";
+
 const page = () => {
   return (
     <div>
-      <Navbar />
+      <SignUpForm />
     </div>
   );
 };

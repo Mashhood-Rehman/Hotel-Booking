@@ -1,9 +1,10 @@
 import React from "react";
-import Navbar from "../../components/(Header)/Navbar";
+import SignInForm from "../../../components/form/SignInForm";
+
 const page = () => {
   return (
     <div>
-      <Navbar />
+      <SignInForm />
     </div>
   );
 };
