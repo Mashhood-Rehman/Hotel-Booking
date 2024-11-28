@@ -29,9 +29,9 @@ export default function SignUpForm() {
   });
 
   const [errors, setErrors] = useState({});
-  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] =
     useState(false);
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -62,7 +62,6 @@ export default function SignUpForm() {
     const { name, value } = e.target;
     setData({ ...data, [name]: value });
   };
-
   const togglePasswordVisibility = () => {
     setIsPasswordVisible(!isPasswordVisible);
   };

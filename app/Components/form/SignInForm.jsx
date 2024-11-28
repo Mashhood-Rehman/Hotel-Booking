@@ -4,19 +4,46 @@ import { Icon } from "@iconify/react";
 import Link from "next/link";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 export default function SignInForm() {
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const router = useRouter();
-  const Submit = async () => {
-    const SignInData = await signIn("credentials", {
-      email: values.email,
-      password: values.password,
-    });
-    if (SignInData.error) {
-      console.log(SignInData.error);
-    } else {
-      router.push("/");
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+  const togglePasswordVisibility = () => {
+    setIsPasswordVisible(!isPasswordVisible);
+  };
+  const Submit = async (e) => {
+    e.preventDefault();
+    const { email, password } = formData;
+
+    try {
+      const SignInData = await signIn("credentials", {
+        email: email,
+        password: password,
+        redirect: false,
+      });
+
+      if (SignInData?.error) {
+        console.log(SignInData.error);
+      } else {
+        router.push("/");
+      }
+    } catch (error) {
+      console.log("Error during signing in:", error);
     }
   };
+
   return (
     <div className="bg-gray-50 font-[sans-serif]">
       <div className="min-h-screen flex flex-col items-center justify-center py-6 px-4">
@@ -29,24 +56,12 @@ export default function SignInForm() {
               {/* Username Input */}
               <div>
                 <label className="text-gray-800 text-sm mb-2 block">
-                  User name
+                  Email
                 </label>
                 <div className="relative flex items-center">
                   <input
-                    name="name"
-                    type="text"
-                    required
-                    className="w-full text-gray-800 text-sm border border-gray-300 px-4 py-3 rounded-md outline-blue-600"
-                    placeholder="Enter user name"
-                  />
-                  <Icon
-                    icon="mdi:account-circle"
-                    className="w-5 h-5 absolute right-4"
-                    color="#bbb"
-                  />
-                </div>
-                <div className="relative flex items-center">
-                  <input
+                    onChange={handleInputChange}
+                    value={formData.email}
                     name="email"
                     type="email"
                     required
@@ -68,16 +83,23 @@ export default function SignInForm() {
                 </label>
                 <div className="relative flex items-center">
                   <input
+                    onChange={handleInputChange}
+                    value={formData.password}
                     name="password"
-                    type="password"
+                    type={isPasswordVisible ? "text" : "password"}
                     required
                     className="w-full text-gray-800 text-sm border border-gray-300 px-4 py-3 rounded-md outline-blue-600"
                     placeholder="Enter password"
                   />
                   <Icon
-                    icon="mdi:eye-off-outline"
-                    className="w-5 h-5 absolute right-4 cursor-pointer"
+                    icon={
+                      isPasswordVisible
+                        ? "mdi:eye-outline"
+                        : "mdi:eye-off-outline"
+                    }
+                    className="w-5 h-5 absolute right-4 bottom-4 cursor-pointer"
                     color="#bbb"
+                    onClick={togglePasswordVisibility}
                   />
                 </div>
               </div>

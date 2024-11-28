@@ -5,6 +5,7 @@ import { db } from "./db";
 import { compare } from "bcrypt";
 export const authOptions: NextAuthOptions = {
         adapter :  PrismaAdapter(db),
+        secret: process.env.NEXTAUTH_SECRET,
         session : {strategy :'jwt'},
     pages: {
         signIn: "/SignIn",
@@ -14,20 +15,22 @@ export const authOptions: NextAuthOptions = {
           name: "Credentials",
           
           credentials: {
-            username: { label: "Email", type: "email", placeholder: "Your Email" },
-            password: { label: "Password", type: "password" }
+            email: { label: "Email", type: "email", placeholder: "Your Email" },
+            password: { label: "Password", type: "password" },
           },
+          
           async authorize(credentials) {
-      if(!credentials?CredentialsProvider.email || !credentials?.password){
-        return null
-      }
-      const existingUser = await db.username.findUnique({
-        where :  {email : credentials?.email}
-      })
-      if(!existingUser){
-        return null
-      }
-
+            if (!credentials?.email || !credentials?.password) {
+              return null;
+            }
+    
+            const existingUser = await db.user.findUnique({
+              where: { email: credentials?.email },
+            });
+    
+            if (!existingUser) {
+              return null;
+            }
       const passwordMatch = await compare(credentials.password,existingUser.password)
          if(!passwordMatch){
             return null
