@@ -2,7 +2,7 @@
 // pages/admin/hotels/add.jsx
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import AdminLayout from "@/app/components/AdminLayout";
+import AdminLayout from "../../../../components/AdminLayout";
 
 const Page = () => {
   const [name, setName] = useState("");
