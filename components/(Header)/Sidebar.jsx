@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { motion } from "framer-motion";
-import { navdData } from "../Helpers/Data";
+import { navdData } from "../../app/Helpers/Data";
 import Link from "next/link";
 
 const Sidebar = ({ isOpen, toggleSidebar }) => {

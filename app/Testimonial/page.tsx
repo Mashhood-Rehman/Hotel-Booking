@@ -2,8 +2,7 @@
 import Image from "next/image";
 import React, { useState } from "react";
 import { Icon } from "@iconify/react";
-import { Accordion } from "../ui/accordion";
-import { AccordionDemo } from "../Accordion/page";
+import { AccordionDemo } from "../../components/Accordion/page";
 
 const Testimonials: React.FC = () => {
   const testimonials = [

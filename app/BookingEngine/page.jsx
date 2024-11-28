@@ -7,7 +7,6 @@ import CustomCalendar from "./CustomCalendar";
 import DoubleCalendar from "./DoubleCalender";
 import RoomSelector from "./RoomSelector";
 import axios from "axios";
-import List from "../../List/page";
 
 function Page() {
   const router = useRouter(); // Initialize useRouter for redirection
