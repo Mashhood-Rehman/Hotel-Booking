@@ -3,7 +3,6 @@ import { Icon } from "@iconify/react";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import emailjs from "@emailjs/browser";
-import Swal from "sweetalert2";
 
 const InquiryForm = () => {
   const [formData, setFormData] = useState({
@@ -14,6 +13,7 @@ const InquiryForm = () => {
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [statusMessage, setStatusMessage] = useState("");
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -26,24 +26,16 @@ const InquiryForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setStatusMessage("");
 
     try {
-      const result = await emailjs.send(
+      await emailjs.send(
         process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID,
         process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID,
         formData,
         process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY
       );
-      console.log("Success:", result.text);
-
-      Swal.fire({
-        position: "top-end",
-        icon: "success",
-        title: "Your message has been sent successfully!",
-        showConfirmButton: false,
-        timer: 1500,
-      });
-
+      setStatusMessage("Your message has been sent successfully!");
       setFormData({
         name: "",
         email: "",
@@ -52,14 +44,7 @@ const InquiryForm = () => {
       });
     } catch (error) {
       console.error("Error:", error);
-
-      Swal.fire({
-        position: "top-end",
-        icon: "error",
-        title: "Failed to send the message. Please try again.",
-        showConfirmButton: false,
-        timer: 1500,
-      });
+      setStatusMessage("Failed to send the message. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
@@ -125,6 +110,17 @@ const InquiryForm = () => {
             <Icon icon="mdi:send" className="mr-2" />
             {isSubmitting ? "Sending..." : "Send Message"}
           </motion.button>
+          {statusMessage && (
+            <p
+              className={`mt-4 text-sm ${
+                statusMessage.includes("successfully")
+                  ? "text-green-500"
+                  : "text-red-500"
+              }`}
+            >
+              {statusMessage}
+            </p>
+          )}
         </motion.form>
       </motion.div>
     </div>
