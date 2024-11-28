@@ -1,9 +1,9 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import BookingEngine from "../BookingEngine/page";
+import BookingEngine from "../../app/BookingEngine/page";
 
-const Page = () => {
+const Hero = () => {
   const [currentImage, setCurrentImage] = useState(0);
   const images = ["/HeroPic.jpg", "/HeroPic2.jpg", "/HeroPic3.jpg"];
 
@@ -39,4 +39,4 @@ const Page = () => {
   );
 };
 
-export default Page;
+export default Hero;

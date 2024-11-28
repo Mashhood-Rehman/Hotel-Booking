@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { RoomCards } from "../../Helpers/Data";
 import Image from "next/image";
+import { RoomCards } from "../Helpers/Data";
 
 const Page = () => {
   const [currentIndex, setCurrentIndex] = useState(0);

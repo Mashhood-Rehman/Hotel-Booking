@@ -1,9 +1,9 @@
 import React from "react";
-import Navbar from "../../components/(Header)/Navbar";
+import Hero from "../../components/(Header)/Hero";
 const page = () => {
   return (
     <div>
-      <Navbar />
+      <Hero />
     </div>
   );
 };
