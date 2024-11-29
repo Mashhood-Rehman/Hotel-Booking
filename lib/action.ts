@@ -70,4 +70,27 @@ export async function searchAccommodation(city: string, type: AccommodationType)
       throw new Error('Failed to fetch accommodations');  
     }
   }
+
+  export async function searchAccommodationByType(type: AccommodationType) {
+    try {
+      let accommodation;
+  
+      // Depending on the type, fetch accommodations from the respective table
+      if (type === AccommodationType.HOTEL) {
+        accommodation = await prisma.hotel.findMany();
+      } else if (type === AccommodationType.APARTMENT) {
+        accommodation = await prisma.apartment.findMany();
+      }
+  
+      if (!accommodation || accommodation.length === 0) {
+        return { message: `No ${type}s found.` };
+      }
+  
+      return accommodation;
+    } catch (error) {
+      console.error('Error fetching accommodations:', error);
+      throw new Error('Failed to fetch accommodations');
+    }
+  }
+
 export default prisma;
