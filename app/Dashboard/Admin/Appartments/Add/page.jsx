@@ -1,140 +1,177 @@
-// "use client";
-// import { useState } from "react";
-// import { useRouter } from "next/navigation";
-// import AdminLayout from "@/components/AdminLayout";
-
-// const Page = () => {
-//   const [name, setName] = useState("");
-//   const router = useRouter();
-
-//   const addAppartment = (e) => {
-//     e.preventDefault();
-//     // Placeholder for POST request
-//     fetch("/api/appartments", {
-//       method: "POST",
-//       headers: { "Content-Type": "application/json" },
-//       body: JSON.stringify({ name }),
-//     }).then(() => router.push("/admin/appartments"));
-//   };
-
-//   return (
-//     <AdminLayout>
-//       <h1 className="text-2xl font-bold mb-6">Add Appartment</h1>
-//       <form onSubmit={addAppartment} className="bg-white shadow rounded p-6">
-//         <div className="mb-4">
-//           <label className="block text-gray-700">Appartment Name</label>
-//           <input
-//             type="text"
-//             className="w-full p-2 border rounded"
-//             value={name}
-//             onChange={(e) => setName(e.target.value)}
-//           />
-//         </div>
-//         <button
-//           className="bg-blue-500 text-white px-4 py-2 rounded"
-//           type="submit"
-//         >
-//           Add Appartment
-//         </button>
-//       </form>
-//     </AdminLayout>
-//   );
-// };
-
-// export default Page;
-
 "use client";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import AdminLayout from "@/components/AdminLayout";
 import axios from "axios";
+import Image from "next/image";
 
 const Page = () => {
-  const [formData, setFormData] = useState({
-    picture: null,
+  const [data, setData] = useState({
     name: "",
     city: "",
+    link: "",
+    type: "apartment",
+    picture: "",
   });
-  const router = useRouter();
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+  const changeHandler = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    setData((data) => ({ ...data, [name]: value }));
   };
 
-  const handleFileChange = (e) => {
-    setFormData({ ...formData, picture: e.target.files[0] });
-  };
-
-  const addAppartment = async (e) => {
+  const [image, setImage] = useState(false);
+  useEffect(() => {}, [data]);
+  const onSubmit = async (e) => {
     e.preventDefault();
 
+    const formdata = new FormData();
+    formdata.append("name", data.name);
+    formdata.append("city", data.city);
+    formdata.append("link", data.link);
+    formdata.append("type", data.type);
+    if (image) {
+      formdata.append("picture", image);
+    }
+
     try {
-      const formDataToSend = new FormData();
-      formDataToSend.append("picture", formData.picture);
-      formDataToSend.append("name", formData.name);
-      formDataToSend.append("city", formData.city);
-
-      await axios.post("/api/route?type=apartment", formDataToSend, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-
-      router.push("/admin/appartments");
-    } catch (err) {
-      console.error("Error adding appartment:", err);
+      const response = await axios.post(
+        `http://localhost:3000/api/route`,
+        formdata
+      );
+      if (response.data) {
+        setData({
+          name: "",
+          city: "",
+          link: "",
+          type: "",
+        });
+        setImage(null); // Reset image state
+      } else {
+        console.error("Error submitting data:", response.data.message);
+      }
+    } catch (error) {
+      console.error("Error during submission:", error);
     }
   };
 
   return (
     <AdminLayout>
       <h1 className="text-2xl font-bold mb-6">Add Appartment</h1>
-      <form onSubmit={addAppartment} className="bg-white shadow rounded p-6">
-        {/* Picture Field */}
-        <div className="mb-4">
-          <label className="block text-gray-700">Appartment Picture</label>
-          <input
-            type="file"
-            accept="image/*"
-            className="w-full p-2 border rounded"
-            onChange={handleFileChange}
-          />
-        </div>
+      <form onSubmit={onSubmit}>
+        <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-4xl">
+          <h2 className="text-2xl font-bold mb-6 text-center">Add New Item</h2>
+          <div className="grid grid-cols-2 gap-6">
+            <div className="mb-4">
+              <label
+                className="block text-gray-700 text-sm font-bold mb-2"
+                htmlFor="picture"
+              >
+                <Image
+                  src={image ? URL.createObjectURL(image) : ""}
+                  className="h-24 w-24"
+                  alt="Uploaded"
+                  width={50}
+                  height={50}
+                />
+              </label>
+              <input
+                onChange={(e) => setImage(e.target.files[0])}
+                type="file"
+                id="picture"
+                name="picture"
+                className="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
+                required
+              />
+            </div>
 
-        {/* Name Field */}
-        <div className="mb-4">
-          <label className="block text-gray-700">Appartment Name</label>
-          <input
-            type="text"
-            name="name"
-            className="w-full p-2 border rounded"
-            value={formData.name}
-            onChange={handleChange}
-            placeholder="Enter appartment name"
-          />
-        </div>
+            <div className="mb-4">
+              <label
+                className="block text-gray-700 text-sm font-bold mb-2"
+                htmlFor="name"
+              >
+                Name
+              </label>
+              <input
+                type="text"
+                onChange={changeHandler}
+                value={data.name}
+                id="name"
+                name="name"
+                className="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
+                placeholder="Enter item name"
+                required
+              />
+            </div>
 
-        {/* City Field */}
-        <div className="mb-4">
-          <label className="block text-gray-700">City</label>
-          <input
-            type="text"
-            name="city"
-            className="w-full p-2 border rounded"
-            value={formData.city}
-            onChange={handleChange}
-            placeholder="Enter city"
-          />
-        </div>
+            <div className="mb-4">
+              <label
+                className="block text-gray-700 text-sm font-bold mb-2"
+                htmlFor="category"
+              >
+                Type
+              </label>
+              <select
+                id="type"
+                name="type"
+                onChange={changeHandler}
+                value={data.type}
+                className=" appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
+              >
+                <option value="apartment">apartment</option>
+              </select>
+            </div>
 
-        {/* Submit Button */}
-        <button
-          className="bg-blue-500 text-white px-4 py-2 rounded"
-          type="submit"
-        >
-          Add Appartment
-        </button>
+            <div className="mb-6 col-span-2">
+              <label
+                className="block text-gray-700 text-sm font-bold mb-2"
+                htmlFor="description"
+              >
+                city
+              </label>
+              <input
+                id="city"
+                name="city"
+                onChange={changeHandler}
+                value={data.city}
+                className="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
+                placeholder="Enter item description"
+                rows="4"
+              />
+            </div>
+            <div className="mb-6 col-span-2">
+              <label
+                className="block text-gray-700 text-sm font-bold mb-2"
+                htmlFor="description"
+              >
+                link
+              </label>
+              <input
+                id="link"
+                name="link"
+                onChange={changeHandler}
+                value={data.link}
+                className="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
+                placeholder="Enter item description"
+                rows="4"
+              />
+            </div>
+          </div>
+
+          <div className="flex items-center justify-between mt-6">
+            <button
+              type="submit"
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none"
+            >
+              Add Item
+            </button>
+            <button
+              type="button"
+              onClick={() => navigate("/items")}
+              className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none"
+            >
+              Back
+            </button>
+          </div>
+        </div>
       </form>
     </AdminLayout>
   );
