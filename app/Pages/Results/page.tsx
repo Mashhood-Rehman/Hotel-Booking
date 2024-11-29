@@ -10,7 +10,6 @@ function ResultsPage() {
       <p>
         Showing results for {type} in {city}.
       </p>
-      {/* Render the results here based on the query */}
     </div>
   );
 }
