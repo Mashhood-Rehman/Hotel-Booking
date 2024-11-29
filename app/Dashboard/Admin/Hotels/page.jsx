@@ -2,6 +2,7 @@
 import axios from "axios";
 import AdminLayout from "../../../../components/AdminLayout";
 import { useEffect, useState } from "react";
+import Image from "next/image";
 
 const Page = () => {
   const [hotel, setHotel] = useState([]);
@@ -37,15 +38,27 @@ const Page = () => {
       <table className="w-full bg-white shadow rounded">
         <thead>
           <tr className="bg-gray-200">
-            <th className="p-4 text-left">ID</th>
+            {/* <th className="p-4 text-left">ID</th> */}
+            <th className="p-4 text-left">Picture</th>
             <th className="p-4 text-left">Name</th>
+            <th className="p-4 text-left">City</th>
             <th className="p-4 text-left">Actions</th>
           </tr>
         </thead>
         <tbody>
           {hotel.map((hotel) => (
             <tr key={hotel.id} className="border-b">
-              <td className="p-4">{hotel.id}</td>
+              {/* <td className="p-4">{hotel.id}</td> */}
+              <td className="p-4">
+                <Image
+                  src={hotel.picture}
+                  width={100}
+                  height={100}
+                  alt="hotels pictures"
+                  className="rounded-md"
+                />
+              </td>
+              <td className="p-4">{hotel.city}</td>
               <td className="p-4">{hotel.name}</td>
               <td className="p-4">
                 <a
