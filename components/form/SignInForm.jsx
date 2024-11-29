@@ -2,9 +2,9 @@
 
 import { Icon } from "@iconify/react";
 import Link from "next/link";
-import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { signIn } from "next-auth/react";
 export default function SignInForm() {
   const [formData, setFormData] = useState({
     email: "",
@@ -64,7 +64,6 @@ export default function SignInForm() {
                     value={formData.email}
                     name="email"
                     type="email"
-                    required
                     className="w-full text-gray-800 text-sm border border-gray-300 px-4 py-3 rounded-md outline-blue-600"
                     placeholder="Your Email"
                   />
@@ -87,7 +86,6 @@ export default function SignInForm() {
                     value={formData.password}
                     name="password"
                     type={isPasswordVisible ? "text" : "password"}
-                    required
                     className="w-full text-gray-800 text-sm border border-gray-300 px-4 py-3 rounded-md outline-blue-600"
                     placeholder="Enter password"
                   />
@@ -132,9 +130,12 @@ export default function SignInForm() {
                 <span className="h-1 w-64 bg-gray-200"></span>
               </div>
               <div className=" flex items-center justify-center">
-                <h2 className=" bg-black flex justify-center w-96 py-3 text-white rounded-lg">
+                <button
+                  onClick={() => signIn("google")}
+                  className=" bg-black flex justify-center w-96 py-3 text-white rounded-lg"
+                >
                   Sign In with Google
-                </h2>
+                </button>
               </div>
 
               {/* Register Link */}
