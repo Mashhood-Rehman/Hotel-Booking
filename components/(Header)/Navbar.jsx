@@ -4,8 +4,13 @@ import Image from "next/image";
 import Link from "next/link";
 import Sidebar from "./Sidebar";
 import { navdData } from "@/app/Helpers/Data";
+import { signOut, useSession } from "next-auth/react";
 
 const Navbar = () => {
+  const { data: session, status } = useSession();
+  console.log(status);
+  console.log(session);
+
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [bgColor, setBgColor] = useState("bg-black");
   useEffect(() => {
@@ -56,13 +61,25 @@ const Navbar = () => {
             </li>
           ))}
         </ul>
-        <div>
-          <Link href="/SignIn">
-            <button className=" hidden lg:block hover:scale-110 duration-300 ease-in-out bg-blue-600 text-white py-2 px-4">
-              SignIn
+        {session ? (
+          <div>
+            <h1 className=" text-white">{session.user.name} </h1>
+            <button
+              className=" hidden lg:block hover:scale-110 duration-300 ease-in-out bg-red-600 text-white py-2 px-4"
+              onClick={() => signOut()}
+            >
+              Sign Out
             </button>
-          </Link>
-        </div>
+          </div>
+        ) : (
+          <div>
+            <Link href="/SignIn">
+              <button className=" hidden lg:block hover:scale-110 duration-300 ease-in-out bg-blue-600 text-white py-2 px-4">
+                SignIn
+              </button>
+            </Link>
+          </div>
+        )}
         <div className="md:hidden flex items-center ">
           <button onClick={toggleSidebar} className="text-white p-2">
             <span className="block w-6 h-0.5 bg-white mb-1"></span>
