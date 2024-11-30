@@ -7,11 +7,11 @@ import GoogleProvider from "next-auth/providers/google";
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(db),
   secret: process.env.NEXTAUTH_SECRET,
-  session: { strategy: 'jwt' },
+  session: { strategy: "jwt" },
   pages: {
-    signIn : "/SignIn",
-    error: '/error',
-    signOut : "/"
+    signIn: "/SignIn",
+    error: "/error",
+    signOut: "/",
   },
   providers: [
     GoogleProvider({
@@ -37,7 +37,10 @@ export const authOptions: NextAuthOptions = {
           return null;
         }
 
-        const passwordMatch = await compare(credentials.password, existingUser.password);
+        const passwordMatch = await compare(
+          credentials.password,
+          existingUser.password
+        );
         if (!passwordMatch) {
           return null;
         }

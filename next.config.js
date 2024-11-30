@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ["readymadeui.com"], // Add the domain here
+    domains: ["readymadeui.com", "lh3.googleusercontent.com"], // Added Google domain
   },
   /* config options here */
 };

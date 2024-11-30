@@ -1,23 +1,26 @@
 "use client";
 import { useState, useEffect } from "react";
 import AdminLayout from "../../../../components/AdminLayout";
+import axios from "axios";
+import Image from "next/image";
 
 const Page = () => {
   const [appartments, setAppartments] = useState([]);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Fetch appartments from the database (placeholder API call)
-    fetch("/api/appartments")
-      .then((res) => res.json())
-      .then((data) => setHotels(data));
-  }, []);
+    const fetchUsers = async () => {
+      try {
+        const res = await axios.get("/api/adminSearch?type=apartment");
+        setAppartments(res.data);
+      } catch (err) {
+        console.error("Error fetching users:", err);
+        setError("Failed to load users");
+      }
+    };
 
-  const deleteHotel = (id) => {
-    // Placeholder for DELETE request
-    fetch(`/api/hotels/${id}`, { method: "DELETE" }).then(() =>
-      setAppartments(appartments.filter((appartments) => appartments.id !== id))
-    );
-  };
+    fetchUsers();
+  }, []);
 
   return (
     <AdminLayout>
@@ -36,16 +39,28 @@ const Page = () => {
       <table className="w-full bg-white shadow rounded">
         <thead>
           <tr className="bg-gray-200">
-            <th className="p-4 text-left">ID</th>
+            {/* <th className="p-4 text-left">ID</th> */}
+            <th className="p-4 text-left">Picture</th>
             <th className="p-4 text-left">Name</th>
+            <th className="p-4 text-left">City</th>
             <th className="p-4 text-left">Actions</th>
           </tr>
         </thead>
         <tbody>
-          {appartments.map((hotel) => (
-            <tr key={hotel.id} className="border-b">
-              <td className="p-4">{appartments.id}</td>
+          {appartments.map((appartments) => (
+            <tr key={appartments.id} className="border-b">
+              {/* <td className="p-4">{appartments.id}</td> */}
+              <td className="p-4">
+                <Image
+                  src={appartments.picture}
+                  width={100}
+                  height={100}
+                  alt="appartments pictures"
+                  className="rounded-md h-24 w-auto"
+                />
+              </td>
               <td className="p-4">{appartments.name}</td>
+              <td className="p-4">{appartments.city}</td>
               <td className="p-4">
                 <a
                   href={`/admin/hotels/edit?id=${appartments.id}`}

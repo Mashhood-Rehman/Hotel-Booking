@@ -1,6 +1,3 @@
-
-
-
 import { db } from "@/lib/db";
 import { hash } from "bcrypt";
 import { NextApiRequest, NextApiResponse } from "next";
@@ -10,14 +7,17 @@ const userSchema = z.object({
   name: z.string().min(3, "Name must be at least three characters long"),
   email: z.string().min(1, "Email is required").email("Invalid email"),
   password: z.string().min(6, "Password must be at least 6 characters"),
-  role: z.enum(["OWNER", "ADMIN", "USER"]).default("USER"), 
+  role: z.enum(["OWNER", "ADMIN", "USER"]).default("USER"),
 });
 
 // Create User (POST)
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method === 'POST') {
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
+  if (req.method === "POST") {
     try {
-      const { email, name, password , role } = userSchema.parse(req.body);
+      const { email, name, password, role } = userSchema.parse(req.body);
 
       const checkEmail = await db.user.findUnique({
         where: { email },
@@ -42,26 +42,28 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           name,
           email,
           password: hashedPassword,
-          role, 
+          role,
         },
       });
       const { password: newUserPassword, ...rest } = newUser;
 
-      return res.status(201).json({ User: rest, message: "User Created Successfully" });
+      return res
+        .status(201)
+        .json({ User: rest, message: "User Created Successfully" });
     } catch (error) {
       return res.status(400).json({ message: "Error", error });
     }
   }
 
-  if (req.method === 'GET') {
+  if (req.method === "GET") {
     try {
       const users = await db.user.findMany({
         select: {
           id: true,
-          name : true,
+          name: true,
           email: true,
           password: true,
-          role : true,
+          role: true,
         },
       });
 

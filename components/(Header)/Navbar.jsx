@@ -7,9 +7,7 @@ import { navdData } from "@/app/Helpers/Data";
 import { signOut, useSession } from "next-auth/react";
 
 const Navbar = () => {
-  const { data: session, status } = useSession();
-  console.log(status);
-  console.log(session);
+  const { data: session } = useSession();
 
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [bgColor, setBgColor] = useState("bg-black");
@@ -63,9 +61,18 @@ const Navbar = () => {
         </ul>
         {session ? (
           <div>
-            <h1 className=" text-white">{session.user.name} </h1>
+            <h1 className="text-white">{session.user.name}</h1>
+            <div className="text-white">
+              <Image
+                src={session.user.image || "/default-avatar.png"} // Fallback image
+                alt="User Profile Image"
+                height={50}
+                width={50}
+                className="rounded-full"
+              />
+            </div>
             <button
-              className=" hidden lg:block hover:scale-110 duration-300 ease-in-out bg-red-600 text-white py-2 px-4"
+              className="hidden lg:block hover:scale-110 duration-300 ease-in-out bg-red-600 text-white py-2 px-4"
               onClick={() => signOut()}
             >
               Sign Out
@@ -74,12 +81,13 @@ const Navbar = () => {
         ) : (
           <div>
             <Link href="/SignIn">
-              <button className=" hidden lg:block hover:scale-110 duration-300 ease-in-out bg-blue-600 text-white py-2 px-4">
+              <button className="hidden lg:block hover:scale-110 duration-300 ease-in-out bg-blue-600 text-white py-2 px-4">
                 SignIn
               </button>
             </Link>
           </div>
         )}
+
         <div className="md:hidden flex items-center ">
           <button onClick={toggleSidebar} className="text-white p-2">
             <span className="block w-6 h-0.5 bg-white mb-1"></span>
