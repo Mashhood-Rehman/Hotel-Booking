@@ -5,7 +5,7 @@
 // import GoogleProvider from "next-auth/providers/google";
 // import { db } from "@/lib/db";
 // const handler = NextAuth({
-//     debug: true, 
+//     debug: true,
 //     adapter: PrismaAdapter(db),
 //     secret: process.env.NEXT_PUBLIC_AUTH_SECRET,
 //       session: { strategy: 'jwt' },
@@ -29,25 +29,25 @@
 //               return null;
 //             }
 //             const existingUser = await db.user.findUnique({
-  //               where: { email: credentials?.email },
-  //             });
-    
-  //             if (!existingUser) {
+//               where: { email: credentials?.email },
+//             });
+
+//             if (!existingUser) {
 //               return null;
 //             }
 
 //             const passwordMatch = await compare(credentials.password, existingUser.password);
 //             if (!passwordMatch) {
-  //               return null;
-  //             }
-  
-  //             return {
-    //               id: `${existingUser.id}`,
-    //               name: existingUser.name,
-    //               email: existingUser.email,
-    //             };
-    //           },
-    //         }),
+//               return null;
+//             }
+
+//             return {
+//               id: `${existingUser.id}`,
+//               name: existingUser.name,
+//               email: existingUser.email,
+//             };
+//           },
+//         }),
 //       ],
 //       callbacks: {
 //         async redirect({ baseUrl, url }) {
@@ -62,19 +62,19 @@
 //           return token;
 //         },
 //         async session({ session, token }) {
-  //           if (session.user) {
-    //             session.user.email = token.email;
-    //             session.user.name = token.name;
-    //             session.user.image = token.picture;
-    //           }
-    //           return session;
-    //         },
-    //       },
-    // })
-    
-    // export { handler as GET, handler as POST }
-    import { authOptions } from "@/lib/auth";
-    import NextAuth from "next-auth";
+//           if (session.user) {
+//             session.user.email = token.email;
+//             session.user.name = token.name;
+//             session.user.image = token.picture;
+//           }
+//           return session;
+//         },
+//       },
+// })
 
- const handler= NextAuth(authOptions)
- export { handler as GET, handler as POST }
+// export { handler as GET, handler as POST }
+import { authOptions } from "@/lib/auth";
+import NextAuth from "next-auth";
+
+const handler = NextAuth(authOptions);
+export { handler as GET, handler as POST };
