@@ -5,8 +5,11 @@ import Link from "next/link";
 import Sidebar from "./Sidebar";
 import { navdData } from "@/app/Helpers/Data";
 import { signOut, useSession } from "next-auth/react";
+import { Icon } from "@iconify/react/dist/iconify.js";
 
 const Navbar = () => {
+  const [isHovered, setIsHovered] = useState(false);
+
   const { data: session } = useSession();
 
   const [isSidebarOpen, setSidebarOpen] = useState(false);
@@ -59,35 +62,52 @@ const Navbar = () => {
             </li>
           ))}
         </ul>
-        {session ? (
-          <div>
-            <h1 className="text-white">{session.user.name}</h1>
-            <div className="text-white">
-              <Image
-                src={session.user.image || "/default-avatar.png"} // Fallback image
-                alt="User Profile Image"
-                height={50}
-                width={50}
-                className="rounded-full"
-              />
-            </div>
-            <button
-              className="hidden lg:block hover:scale-110 duration-300 ease-in-out bg-red-600 text-white py-2 px-4"
-              onClick={() => signOut()}
+        <div className="relative flex items-center">
+          {session ? (
+            <div
+              className="group relative"
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
             >
-              Sign Out
-            </button>
-          </div>
-        ) : (
-          <div>
-            <Link href="/SignIn">
-              <button className="hidden lg:block hover:scale-110 duration-300 ease-in-out bg-blue-600 text-white py-2 px-4">
-                SignIn
-              </button>
-            </Link>
-          </div>
-        )}
+              <div className="flex items-center">
+                <Image
+                  src={session.user.image || "/default-avatar.png"}
+                  alt="User Profile Image"
+                  height={50}
+                  width={50}
+                  className="rounded-full transition-all duration-300 ease-in-out"
+                />
+              </div>
 
+              <div
+                className={`absolute right-2 mt-2 w-40 bg-gray-800 text-white rounded-lg p-2 transition-all duration-300 ease-in-out opacity-0 group-hover:opacity-100 ${
+                  isHovered ? "opacity-100" : ""
+                }`}
+              >
+                <h1 className="text-white">{session.user.name}</h1>
+                <div className="flex items-center space-x-2">
+                  {/* Icon for Sign-Out */}
+                  <button
+                    className="flex items-center space-x-2 hover:text-red-500"
+                    onClick={signOut}
+                  >
+                    <Icon icon="mdi:logout" width={20} />
+                    <span>Sign Out</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div>
+              <Link href="/SignIn">
+                <button className="hidden lg:block hover:scale-110 duration-300 ease-in-out bg-blue-600 text-white py-2 px-4">
+                  <Icon icon="mdi:login" width={20} className="mr-2" />
+                  Sign In
+                </button>
+              </Link>
+            </div>
+          )}
+        </div>
         <div className="md:hidden flex items-center ">
           <button onClick={toggleSidebar} className="text-white p-2">
             <span className="block w-6 h-0.5 bg-white mb-1"></span>
