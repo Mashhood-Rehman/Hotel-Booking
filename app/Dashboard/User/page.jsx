@@ -27,7 +27,7 @@ const Page = () => {
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold">Users</h1>
       </div>
-      {error && <p className="text-red-500">{error}</p>} {/* Display error */}
+      {error && <p className="text-red-500">{error}</p>}
       <table className="w-full  bg-white shadow rounded">
         <thead>
           <tr className="bg-gray-200">
