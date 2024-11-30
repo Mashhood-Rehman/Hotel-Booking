@@ -56,7 +56,7 @@ const Page = () => {
                   width={100}
                   height={100}
                   alt="appartments pictures"
-                  className="rounded-md"
+                  className="rounded-md h-24 w-auto"
                 />
               </td>
               <td className="p-4">{appartments.name}</td>

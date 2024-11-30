@@ -55,11 +55,11 @@ const Page = () => {
                   width={100}
                   height={100}
                   alt="hotels pictures"
-                  className="rounded-md"
+                  className="rounded-md h-24 w-auto"
                 />
               </td>
-              <td className="p-4">{hotel.city}</td>
               <td className="p-4">{hotel.name}</td>
+              <td className="p-4">{hotel.city}</td>
               <td className="p-4">
                 <a
                   href={`/admin/Page/edit?id=${hotel.id}`}
