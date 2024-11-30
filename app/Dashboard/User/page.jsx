@@ -7,14 +7,12 @@ const Page = () => {
   const [Page, setPage] = useState([]);
 
   useEffect(() => {
-    // Fetch Page from the database (placeholder API call)
     fetch("/api/Page")
       .then((res) => res.json())
       .then((data) => setPage(data));
   }, []);
 
   const deleteUser = (id) => {
-    // Placeholder for DELETE request
     fetch(`/api/Page/${id}`, { method: "DELETE" }).then(() =>
       setPage(Page.filter((user) => user.id !== id))
     );
