@@ -31,7 +31,6 @@ export default function SignInForm() {
       const SignInData = await signIn("credentials", {
         email: email,
         password: password,
-        redirect: false,
       });
 
       if (SignInData?.error) {
@@ -131,8 +130,13 @@ export default function SignInForm() {
               </div>
               <div className=" flex items-center justify-center">
                 <button
-                  onClick={() => signIn("google")}
-                  className=" bg-black flex justify-center w-96 py-3 text-white rounded-lg"
+                  type="button"
+                  onClick={() => {
+                    signIn("google", {
+                      callbackUrl: "http://localhost:3000/",
+                    });
+                  }}
+                  className="bg-black flex justify-center w-96 py-3 text-white rounded-lg"
                 >
                   Sign In with Google
                 </button>

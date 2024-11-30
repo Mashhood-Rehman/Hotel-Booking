@@ -1,6 +1,3 @@
-
-
-
 "use server"
 import { PrismaClient } from '@prisma/client';
 
@@ -75,7 +72,6 @@ export async function searchAccommodation(city: string, type: AccommodationType)
     try {
       let accommodation;
   
-      // Depending on the type, fetch accommodations from the respective table
       if (type === AccommodationType.HOTEL) {
         accommodation = await prisma.hotel.findMany();
       } else if (type === AccommodationType.APARTMENT) {
