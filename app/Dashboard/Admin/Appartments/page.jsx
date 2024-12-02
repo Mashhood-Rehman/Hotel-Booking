@@ -47,7 +47,7 @@ const Page = () => {
           </tr>
         </thead>
         <tbody>
-          {appartments.map((appartments) => (
+          {appartments?.map((appartments) => (
             <tr key={appartments.id} className="border-b">
               {/* <td className="p-4">{appartments.id}</td> */}
               <td className="p-4">
