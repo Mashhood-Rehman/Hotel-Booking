@@ -46,36 +46,36 @@ const Page = () => {
           </tr>
         </thead>
         <tbody>
-          {hotel.map((hotel) => (
-            <tr key={hotel.id} className="border-b">
-              {/* <td className="p-4">{hotel.id}</td> */}
-              <td className="p-4">
-                <Image
-                  src={hotel.picture}
-                  width={100}
-                  height={100}
-                  alt="hotels pictures"
-                  className="rounded-md h-24 w-auto"
-                />
-              </td>
-              <td className="p-4">{hotel.name}</td>
-              <td className="p-4">{hotel.city}</td>
-              <td className="p-4">
-                <a
-                  href={`/admin/Page/edit?id=${hotel.id}`}
-                  className="text-blue-500 mr-4"
-                >
-                  Edit
-                </a>
-                <button
-                  onClick={() => deleteHotel(hotel.id)}
-                  className="text-red-500"
-                >
-                  Delete
-                </button>
-              </td>
-            </tr>
-          ))}
+          {Array.isArray(hotel) &&
+            hotel.map((hotel) => (
+              <tr key={hotel.id} className="border-b">
+                <td className="p-4">
+                  <Image
+                    src={hotel.picture}
+                    width={100}
+                    height={100}
+                    alt="hotels pictures"
+                    className="rounded-md h-24 w-auto"
+                  />
+                </td>
+                <td className="p-4">{hotel.name}</td>
+                <td className="p-4">{hotel.city}</td>
+                <td className="p-4">
+                  <a
+                    href={`/admin/Page/edit?id=${hotel.id}`}
+                    className="text-blue-500 mr-4"
+                  >
+                    Edit
+                  </a>
+                  <button
+                    onClick={() => deleteHotel(hotel.id)}
+                    className="text-red-500"
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
         </tbody>
       </table>
     </AdminLayout>
