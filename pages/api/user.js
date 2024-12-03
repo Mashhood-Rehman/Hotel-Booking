@@ -1,6 +1,5 @@
 import { db } from "@/lib/db";
 import { hash } from "bcrypt";
-import { NextApiRequest, NextApiResponse } from "next";
 import * as z from "zod";
 
 const userSchema = z.object({
@@ -11,10 +10,7 @@ const userSchema = z.object({
 });
 
 // Create User (POST)
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
+export default async function handler(req, res) {
   if (req.method === "POST") {
     try {
       const { email, name, password, role } = userSchema.parse(req.body);
@@ -45,9 +41,11 @@ export default async function handler(
           role,
         },
       });
+      await sendOtpEmail(email);
       const { password: newUserPassword, ...rest } = newUser;
 
       return res
+
         .status(201)
         .json({ User: rest, message: "User Created Successfully" });
     } catch (error) {
@@ -74,4 +72,14 @@ export default async function handler(
   }
 
   return res.status(405).json({ message: "Method Not Allowed" });
+
+  async function sendOtpEmail(email) {
+    const otpResponse = await fetch("/api/send-otp", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email }),
+    });
+    if (!otpResponse.ok) throw new Error("Failed to send OTP");
+  }
+  return otpResponse.json();
 }
