@@ -101,7 +101,6 @@ const Navbar = () => {
             <div>
               <Link href="/SignIn">
                 <button className="hidden lg:block hover:scale-110 duration-300 ease-in-out bg-blue-600 text-white py-2 px-4">
-                  <Icon icon="mdi:login" width={20} className="mr-2" />
                   Sign In
                 </button>
               </Link>
