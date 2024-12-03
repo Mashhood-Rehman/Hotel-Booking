@@ -1,7 +1,16 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ["readymadeui.com", "lh3.googleusercontent.com"], // Added Google domain
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "readymadeui.com",
+      },
+      {
+        protocol: "https",
+        hostname: "lh3.googleusercontent.com",
+      },
+    ],
   },
   /* config options here */
 };
