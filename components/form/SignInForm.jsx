@@ -3,26 +3,30 @@
 import { Icon } from "@iconify/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
-import { signIn } from "next-auth/react";
+import { useState, useEffect } from "react";
+import { signIn, useSession } from "next-auth/react";
+
 export default function SignInForm() {
+  const { data: session, status } = useSession(); // Get session data
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const router = useRouter();
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
   };
+
   const togglePasswordVisibility = () => {
     setIsPasswordVisible(!isPasswordVisible);
   };
+
   const Submit = async (e) => {
     e.preventDefault();
     const { email, password } = formData;
@@ -31,17 +35,45 @@ export default function SignInForm() {
       const SignInData = await signIn("credentials", {
         email: email,
         password: password,
+        redirect: false,
       });
 
+      console.log(SignInData);
+
       if (SignInData?.error) {
-        console.log(SignInData.error);
+        console.log("Error signing in", SignInData.error);
       } else {
-        router.push("/");
+        if (status === "authenticated" && session?.user?.role) {
+          const role = session.user.role;
+          console.log(role);
+
+          if (role === "ADMIN") {
+            router.push("/Dashboard/Admin");
+          } else if (role === "USER") {
+            router.push("/");
+          } else {
+            router.push("/About");
+          }
+        }
       }
     } catch (error) {
       console.log("Error during signing in:", error);
     }
   };
+
+  useEffect(() => {
+    if (status === "authenticated" && session?.user?.role) {
+      const role = session.user.role;
+      console.log(role);
+      if (role === "ADMIN") {
+        router.push("/Dashboard/Admin");
+      } else if (role === "USER") {
+        router.push("/");
+      } else {
+        router.push("/About");
+      }
+    }
+  }, [status, session, router]);
 
   return (
     <div className="bg-gray-50 font-[sans-serif]">
@@ -124,11 +156,11 @@ export default function SignInForm() {
               </div>
 
               <div className="flex items-center justify-center space-x-4">
-                <span className="h-1   w-64 bg-gray-200"></span>
+                <span className="h-1 w-64 bg-gray-200"></span>
                 <span className="text-black font-semibold">or</span>
                 <span className="h-1 w-64 bg-gray-200"></span>
               </div>
-              <div className=" flex items-center justify-center">
+              <div className="flex items-center justify-center">
                 <button
                   type="button"
                   onClick={() => {

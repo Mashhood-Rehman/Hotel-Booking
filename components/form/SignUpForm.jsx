@@ -32,7 +32,6 @@ export default function SignUpForm() {
   const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] =
     useState(false);
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -42,8 +41,8 @@ export default function SignUpForm() {
 
       const response = await axios.post("/api/user", data);
       if (response.data) {
-        console.log("good ho gaya");
-        router.push("/SignIn");
+        localStorage.setItem("email", data.email);
+        router.push("/VerifyOtp");
       }
     } catch (error) {
       if (error instanceof z.ZodError) {
