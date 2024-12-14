@@ -3,26 +3,31 @@
 import { Icon } from "@iconify/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
-import { signIn } from "next-auth/react";
+import { useState, useEffect } from "react";
+import { signIn, useSession } from "next-auth/react";
+
 export default function SignInForm() {
+  const { data: session, status } = useSession();
+  const [message, setMessage] = useState("");
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const router = useRouter();
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
   };
+
   const togglePasswordVisibility = () => {
     setIsPasswordVisible(!isPasswordVisible);
   };
+
   const Submit = async (e) => {
     e.preventDefault();
     const { email, password } = formData;
@@ -31,17 +36,33 @@ export default function SignInForm() {
       const SignInData = await signIn("credentials", {
         email: email,
         password: password,
+        redirect: false,
       });
 
       if (SignInData?.error) {
-        console.log(SignInData.error);
+        setMessage(SignInData.error);
       } else {
+        setMessage("Login Successfull");
         router.push("/");
       }
     } catch (error) {
       console.log("Error during signing in:", error);
     }
   };
+
+  useEffect(() => {
+    if (status === "authenticated" && session?.user?.role) {
+      const role = session.user.role;
+      console.log(role);
+      if (role === "ADMIN") {
+        router.push("/Dashboard/Admin");
+      } else if (role === "USER") {
+        router.push("/");
+      } else {
+        router.push("/About");
+      }
+    }
+  }, [status, session, router]);
 
   return (
     <div className="bg-gray-50 font-[sans-serif]">
@@ -52,6 +73,11 @@ export default function SignInForm() {
               Sign in
             </h2>
             <form onSubmit={Submit} className="mt-8 space-y-4">
+              {message && (
+                <p className=" bg-gray-300 p-4 rounded-lg w-full text-red-500">
+                  {message}
+                </p>
+              )}
               {/* Username Input */}
               <div>
                 <label className="text-gray-800 text-sm mb-2 block">
@@ -105,7 +131,7 @@ export default function SignInForm() {
               <div className="flex flex-wrap items-center justify-between gap-4">
                 <div className="text-sm">
                   <Link
-                    href="/"
+                    href="/ForgetPassword"
                     className="text-blue-600 hover:underline font-semibold"
                   >
                     Forgot your password?
@@ -124,11 +150,11 @@ export default function SignInForm() {
               </div>
 
               <div className="flex items-center justify-center space-x-4">
-                <span className="h-1   w-64 bg-gray-200"></span>
+                <span className="h-1 w-64 bg-gray-200"></span>
                 <span className="text-black font-semibold">or</span>
                 <span className="h-1 w-64 bg-gray-200"></span>
               </div>
-              <div className=" flex items-center justify-center">
+              <div className="flex items-center justify-center">
                 <button
                   type="button"
                   onClick={() => {

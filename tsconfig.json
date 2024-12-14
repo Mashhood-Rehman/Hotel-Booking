@@ -29,9 +29,9 @@
   ".next/types/**/*.ts",
   "lib/multer.js",
   "app/Contact/page.jsx",
-  "pages/api/verify-otp.js",
+  "pages/api/verifyOtp.js",
   "pages/api/user.js",
-  "pages/api/send-otp.js"
+  "pages/api/sendOtp.js"
 ],
 
  "exclude": ["node_modules"]

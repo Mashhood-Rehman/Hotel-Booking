@@ -95,6 +95,16 @@ const Navbar = () => {
                     <span>Sign Out</span>
                   </button>
                 </div>
+                <div className="flex items-center space-x-2">
+                  {/* Icon for Sign-Out */}
+                  <Link
+                    to="/Settings"
+                    className="flex items-center space-x-2 hover:text-red-500"
+                  >
+                    <Icon icon="mdi:settings" width={20} />
+                    <span>Settings</span>
+                  </Link>
+                </div>
               </div>
             </div>
           ) : (
