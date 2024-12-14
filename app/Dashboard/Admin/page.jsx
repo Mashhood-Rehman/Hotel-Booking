@@ -4,18 +4,15 @@ import { authOptions } from "@/lib/auth";
 
 const Page = async () => {
   const session = await getServerSession(authOptions);
-  console.log(session);
-  if (!session || !session.user) {
-    throw new Error("Access Denied");
-  }
-
-  if (session.user.role !== "ADMIN") {
-    throw new Error("Insufficient Permissions");
-  }
+  console.log(session.user.role);
   return (
     <div>
       <AdminLayout>
-        <h1>Welcome {session.user.name} </h1>
+        {session ? (
+          <h1>Welcome {session.user.name} </h1>
+        ) : (
+          <h1>Not Logged in</h1>
+        )}
       </AdminLayout>
     </div>
   );

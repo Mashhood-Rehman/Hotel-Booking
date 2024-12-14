@@ -15,6 +15,14 @@ export default function VerifyOtp() {
   const [isVerified, setIsVerified] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  // Password length validation function
+  const validatePassword = (password) => {
+    if (password.length < 5) {
+      return "Password must be at least 5 characters long";
+    }
+    return null;
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setData({ ...data, [name]: value });
@@ -24,8 +32,16 @@ export default function VerifyOtp() {
     e.preventDefault();
     setLoading(true);
 
-    if (!data.email || !data.name || !data.password) {
-      setError("Email not found");
+    // Check if password is valid
+    const passwordError = validatePassword(data.password);
+    if (passwordError) {
+      setError(passwordError);
+      setLoading(false);
+      return;
+    }
+
+    if (!data.email || !data.name || !data.password || !data.otp) {
+      setError("All fields are required");
       setLoading(false);
       return;
     }
@@ -75,6 +91,10 @@ export default function VerifyOtp() {
                 className="w-full py-3 px-4 text-sm tracking-wide rounded-lg border border-gray-300"
                 required
               />
+              {/* Display password validation error */}
+              {error && error.includes("Password") && (
+                <p className="text-red-500 text-sm mt-2">{error}</p>
+              )}
 
               <input
                 name="otp"
@@ -85,7 +105,9 @@ export default function VerifyOtp() {
                 className="w-full py-3 px-4 text-sm tracking-wide rounded-lg border border-gray-300"
                 required
               />
-              {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
+              {error && !error.includes("Password") && (
+                <p className="text-red-500 text-sm mt-2">{error}</p>
+              )}
               {isVerified && (
                 <p className="text-green-500 text-sm mt-2">OTP Verified!</p>
               )}

@@ -7,7 +7,8 @@ import { useState, useEffect } from "react";
 import { signIn, useSession } from "next-auth/react";
 
 export default function SignInForm() {
-  const { data: session, status } = useSession(); // Get session data
+  const { data: session, status } = useSession();
+  const [message, setMessage] = useState("");
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -38,23 +39,11 @@ export default function SignInForm() {
         redirect: false,
       });
 
-      console.log(SignInData);
-
       if (SignInData?.error) {
-        console.log("Error signing in", SignInData.error);
+        setMessage(SignInData.error);
       } else {
-        if (status === "authenticated" && session?.user?.role) {
-          const role = session.user.role;
-          console.log(role);
-
-          if (role === "ADMIN") {
-            router.push("/Dashboard/Admin");
-          } else if (role === "USER") {
-            router.push("/");
-          } else {
-            router.push("/About");
-          }
-        }
+        setMessage("Login Successfull");
+        router.push("/");
       }
     } catch (error) {
       console.log("Error during signing in:", error);
@@ -84,6 +73,11 @@ export default function SignInForm() {
               Sign in
             </h2>
             <form onSubmit={Submit} className="mt-8 space-y-4">
+              {message && (
+                <p className=" bg-gray-300 p-4 rounded-lg w-full text-red-500">
+                  {message}
+                </p>
+              )}
               {/* Username Input */}
               <div>
                 <label className="text-gray-800 text-sm mb-2 block">
@@ -137,7 +131,7 @@ export default function SignInForm() {
               <div className="flex flex-wrap items-center justify-between gap-4">
                 <div className="text-sm">
                   <Link
-                    href="/"
+                    href="/ForgetPassword"
                     className="text-blue-600 hover:underline font-semibold"
                   >
                     Forgot your password?

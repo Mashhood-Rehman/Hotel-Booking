@@ -3,7 +3,6 @@ import bcrypt from "bcrypt";
 export default async function handler(req, res) {
   if (req.method === "POST") {
     const { email, otp, name, password } = req.body;
-    console.log(req.body);
     try {
       const otpEntry = await db.otp.findFirst({
         where: { email, otp },
@@ -32,7 +31,6 @@ export default async function handler(req, res) {
           emailVerified: new Date(),
         },
       });
-      console.log(user);
 
       await db.otp.deleteMany({ where: { email } });
 

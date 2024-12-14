@@ -3,9 +3,7 @@ import * as z from "zod";
 import nodemailer from "nodemailer";
 
 const userSchema = z.object({
-  name: z.string().min(3, "Name must be at least three characters long"),
   email: z.string().min(1, "Email is required").email("Invalid email"),
-  password: z.string().min(6, "Password must be at least 6 characters"),
 });
 
 export default async function handler(req, res) {
@@ -48,6 +46,20 @@ export default async function handler(req, res) {
       return res.status(500).json({ message: `Error: ${error.message}` });
     }
   }
-
+  if (req.method === "GET") {
+    try {
+      const fetchAllUsers = await db.user.findMany({});
+      if (fetchAllUsers) {
+        return res.json(
+          { message: "Fetched All Users", users: fetchAllUsers },
+          { status: 200 }
+        );
+      } else {
+        return res.status(404).json({ message: "No users found" });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
   return res.status(405).json({ message: "Method Not Allowed" });
 }

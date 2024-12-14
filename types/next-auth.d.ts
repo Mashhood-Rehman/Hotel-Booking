@@ -1,7 +1,6 @@
 // next-auth.d.ts
 import NextAuth from "next-auth";
 import { Role } from '@prisma/client'; // Import the Role enum from Prisma
-
 declare module "next-auth" {
   interface Session {
     user: {
