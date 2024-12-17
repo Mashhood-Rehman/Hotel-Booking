@@ -1,18 +1,13 @@
 import { getServerSession } from "next-auth";
 import AdminLayout from "../../../components/AdminLayout";
 import { authOptions } from "@/lib/auth";
+import { Link } from "lucide-react";
 
 const Page = async () => {
-  const session = await getServerSession(authOptions);
-  console.log(session.user.role);
   return (
     <div>
       <AdminLayout>
-        {session ? (
-          <h1>Welcome {session.user.name} </h1>
-        ) : (
-          <h1>Not Logged in</h1>
-        )}
+        <h1>Welcome </h1>
       </AdminLayout>
     </div>
   );

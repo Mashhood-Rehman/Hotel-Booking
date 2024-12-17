@@ -39,30 +39,17 @@ export default function SignInForm() {
         redirect: false,
       });
 
-      if (SignInData?.error) {
-        setMessage(SignInData.error);
-      } else {
-        setMessage("Login Successfull");
+      if (SignInData) {
+        setMessage("Login Successful");
         router.push("/");
+      } else {
+        setMessage(SignInData.error);
+        alert(SignInData);
       }
     } catch (error) {
       console.log("Error during signing in:", error);
     }
   };
-
-  useEffect(() => {
-    if (status === "authenticated" && session?.user?.role) {
-      const role = session.user.role;
-      console.log(role);
-      if (role === "ADMIN") {
-        router.push("/Dashboard/Admin");
-      } else if (role === "USER") {
-        router.push("/");
-      } else {
-        router.push("/About");
-      }
-    }
-  }, [status, session, router]);
 
   return (
     <div className="bg-gray-50 font-[sans-serif]">
