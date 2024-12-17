@@ -21,6 +21,7 @@ export default function SignUpForm() {
   const [data, setData] = useState({
     email: "",
   });
+  const [message, setMessage] = useState("");
 
   const [errors, setErrors] = useState({});
   const handleSubmit = async (e) => {
@@ -32,8 +33,11 @@ export default function SignUpForm() {
 
       const response = await axios.post("/api/user", data);
       if (response.data) {
+        setMessage(response.data.message);
+
         localStorage.setItem("email", data.email);
         router.push("/VerifyOtp");
+        setMessage(response.data.message);
       }
     } catch (error) {
       if (error instanceof z.ZodError) {
@@ -43,7 +47,7 @@ export default function SignUpForm() {
         }, {});
         setErrors(validationErrors);
       } else {
-        console.log("Error occurred", error);
+        setMessage("Try another Email");
       }
     }
   };
@@ -62,6 +66,11 @@ export default function SignUpForm() {
               Sign Up
             </h2>
             <form onSubmit={handleSubmit} className="mt-8 space-y-4">
+              {message && (
+                <p className=" bg-gray-300 p-3 rounded-lg ease-in-out text-red-500">
+                  {message}
+                </p>
+              )}
               <div>
                 <label className="text-gray-800 text-sm mb-2 block">
                   Email
