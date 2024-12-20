@@ -1,27 +1,20 @@
-"use client";
 import axios from "axios";
 import AdminLayout from "../../../../components/AdminLayout";
-import { useEffect, useState } from "react";
 import Image from "next/image";
 
-const Page = () => {
-  const [hotel, setHotel] = useState([]);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const res = await axios.get("/api/adminSearch?type=hotel");
-        setHotel(res.data);
-      } catch (err) {
-        console.error("Error fetching users:", err);
-        setError("Failed to load users");
-      }
-    };
-
-    fetchUsers();
-  }, []);
-
+const fetchUsers = async () => {
+  try {
+    const res = await axios.get(
+      "http://localhost:3000/api/adminSearch?type=hotel"
+    );
+    return res.data;
+  } catch (error) {
+    console.error("Error fetching users:", error);
+    return { error: "Failed to load users", hotel: [] };
+  }
+};
+const Page = async () => {
+  const { hotel = [], error = null } = await fetchUsers();
   return (
     <AdminLayout>
       <h1 className="text-2xl font-bold">Hotel Management</h1>
@@ -35,6 +28,7 @@ const Page = () => {
           Add Hotel
         </a>
       </div>
+      {error && <p className="text-red-500">{error}</p>}
       <table className="w-full bg-white shadow rounded">
         <thead>
           <tr className="bg-gray-200">
