@@ -1,5 +1,5 @@
 import { db } from "@/lib/db";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 export default async function handler(req, res) {
   if (req.method === "POST") {
     const { email, otp, name, password } = req.body;

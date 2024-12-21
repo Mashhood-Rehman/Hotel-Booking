@@ -1,26 +1,18 @@
-"use client";
 import axios from "axios";
 import AdminLayout from "../../../components/AdminLayout";
 
-import { useEffect, useState } from "react";
+const fetchUsers = async () => {
+  try {
+    const res = await axios.get("http://localhost:3000/api/user");
+    return res.data;
+  } catch (error) {
+    console.error("Error fetching users:", error);
+    return { error: "Failed to load users", users: [] };
+  }
+};
 
-const Page = () => {
-  const [users, setUsers] = useState([]);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const res = await axios.get("/api/user");
-        setUsers(res.data.users);
-      } catch (err) {
-        console.error("Error fetching users:", err);
-        setError("Failed to load users");
-      }
-    };
-
-    fetchUsers();
-  }, []);
+const Page = async () => {
+  const { users = [], error = null } = await fetchUsers();
 
   return (
     <AdminLayout>
@@ -28,7 +20,7 @@ const Page = () => {
         <h1 className="text-2xl font-bold">Users</h1>
       </div>
       {error && <p className="text-red-500">{error}</p>}
-      <table className="w-full  bg-white shadow rounded">
+      <table className="w-full bg-white shadow rounded">
         <thead>
           <tr className="bg-gray-200">
             <th className="p-4 text-left">ID</th>
@@ -36,7 +28,7 @@ const Page = () => {
             <th className="p-4 text-left">Email</th>
           </tr>
         </thead>
-        <tbody className="">
+        <tbody>
           {users.length > 0 ? (
             users.map((user) => (
               <tr key={user.id} className="border-b">
@@ -47,7 +39,7 @@ const Page = () => {
             ))
           ) : (
             <tr>
-              <td colSpan="4" className="p-4 text-center">
+              <td colSpan="3" className="p-4 text-center">
                 No users found.
               </td>
             </tr>

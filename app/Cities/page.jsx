@@ -10,9 +10,9 @@ const Page = () => {
   useEffect(() => {
     const updateVisibleCards = () => {
       if (window.innerWidth < 768) {
-        setVisibleCards(1); // 1 card visible for small screens
+        setVisibleCards(1);
       } else {
-        setVisibleCards(3); // 3 cards visible for large screens
+        setVisibleCards(3);
       }
     };
 

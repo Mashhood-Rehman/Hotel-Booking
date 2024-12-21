@@ -1,6 +1,6 @@
 import { prisma } from "@/lib/db";
 import { z } from "zod";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 const resetPasswordSchema = z.object({
   token: z.string(),
   newPassword: z.string().min(6),

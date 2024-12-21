@@ -1,26 +1,22 @@
-"use client";
-import { useState, useEffect } from "react";
 import AdminLayout from "../../../../components/AdminLayout";
 import axios from "axios";
 import Image from "next/image";
+import Link from "next/link";
 
-const Page = () => {
-  const [appartments, setAppartments] = useState([]);
-  const [error, setError] = useState(null);
+const fetchUsers = async () => {
+  try {
+    const res = await axios.get(
+      "http://localhost:3000/api/adminSearch?type=apartment"
+    );
+    return res.data;
+  } catch (error) {
+    console.error("Error fetching users:", error);
+    return { error: "Failed to load users", appartments: [] };
+  }
+};
 
-  useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const res = await axios.get("/api/adminSearch?type=apartment");
-        setAppartments(res.data);
-      } catch (err) {
-        console.error("Error fetching users:", err);
-        setError("Failed to load users");
-      }
-    };
-
-    fetchUsers();
-  }, []);
+const Page = async () => {
+  const { appartments = [], error = null } = await fetchUsers();
 
   return (
     <AdminLayout>
@@ -35,6 +31,7 @@ const Page = () => {
           Add Appartment
         </a>
       </div>
+      {error && <p className="text-red-500">{error}</p>}
 
       <table className="w-full bg-white shadow rounded">
         <thead>
@@ -62,12 +59,12 @@ const Page = () => {
               <td className="p-4">{appartments.name}</td>
               <td className="p-4">{appartments.city}</td>
               <td className="p-4">
-                <a
+                <Link
                   href={`/admin/hotels/edit?id=${appartments.id}`}
                   className="text-blue-500 mr-4"
                 >
                   Edit
-                </a>
+                </Link>
                 <button
                   onClick={() => deleteHotel(appartments.id)}
                   className="text-red-500"

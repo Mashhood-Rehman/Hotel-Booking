@@ -1,4 +1,3 @@
-import { Icon } from "@iconify/react/dist/iconify.js";
 import Image from "next/image";
 
 export default function AboutUs() {
@@ -10,7 +9,7 @@ export default function AboutUs() {
   ];
 
   return (
-    <div className="p-4">
+    <div className="p-12 bg-black ">
       <div className=" flex justify-evenly">
         <div className="grid grid-cols-2 lg:grid-cols-2 lg:grid-rows-2 gap-4">
           {ImageData.map((pic, index) => (
@@ -29,23 +28,27 @@ export default function AboutUs() {
         </div>
         {/* 
         Second DIv */}
-        <div className=" flex flex-col space-y-6">
+        <div className=" flex flex-col space-y-6 text-white">
           <h2
             style={{
               fontFamily: "Dancing Script, cursive",
-              fontSize: "2rem", // You can adjust the size as per your preference
-              fontWeight: "700", // This gives it a bold, cursive effect
+              fontSize: "2rem",
+              fontWeight: "700",
             }}
-            className="text-3xl font-semibold text-center text-blue-600 mb-8"
+            className="text-3xl font-semibold text-center text-[#c4a053] mb-8"
           >
             <span> -</span>About Us<span> -</span>
           </h2>
           <h1 className=" font-bold text-3xl flex space-x-3 tracking-wide items-center ">
-            Welcome to{" "}
-            <span>
-              <Icon icon="carbon:hotel" className=" text-blue-600" />
-            </span>{" "}
-            Hotel Planet{" "}
+            Welcome to
+            <span className=" mt-2 ml-2 animate-bounce">
+              <Image
+                src="/logo.jpeg"
+                alt="Logo-image"
+                height={100}
+                width={100}
+              />
+            </span>
           </h1>
           <p className=" w-96">
             Lorem ipsum dolor sit amet consectetur, adipisicing elit. Assumenda,
@@ -59,8 +62,8 @@ export default function AboutUs() {
           <div className=" flex items-center space-x-3">
             {/* 
    Third Div */}
-            <div className=" flex  space-x-5 border-l-4 border-blue-600 p-2">
-              <h1 className=" text-blue-600 font-bold text-4xl">10</h1>
+            <div className=" flex  space-x-5 border-l-4 border-[#c4a053] p-2">
+              <h1 className=" text-[#c4a053] font-bold text-4xl">10</h1>
               <div>
                 <span className=" text-gray-400">Years of</span>
                 <h1 className=" font-bold text-2xl ">Experience</h1>
@@ -68,8 +71,8 @@ export default function AboutUs() {
             </div>
             {/* 
           Fourth DIv */}
-            <div className=" flex  space-x-5 border-l-4 border-blue-600 p-2">
-              <h1 className=" text-blue-600 font-bold text-4xl">15</h1>
+            <div className=" flex  space-x-5 border-l-4 border-[#c4a053] p-2">
+              <h1 className=" text-[#c4a053] font-bold text-4xl">15</h1>
               <div>
                 <span className=" text-gray-400">Popular</span>
                 <h1 className=" font-bold text-2xl ">Hotels | Aparments</h1>

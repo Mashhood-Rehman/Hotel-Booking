@@ -28,7 +28,18 @@ export default function SettingsLayout({ children }) {
   };
 
   if (!session) {
-    return <p>Login to access settings</p>; // Show this if user is not logged in
+    return (
+      <>
+        <p className=" text-xl font-semibold flex items-center justify-center p-4">
+          You are not logged In !
+        </p>
+        <Link href="/SignIn" className="     flex items-center justify-center ">
+          <button className=" px-6 py-2 mb-2 bg-blue-600 rounded-lg text-white ">
+            Click here to Login
+          </button>
+        </Link>
+      </>
+    );
   }
   return (
     <div className="flex min-h-screen bg-gray-50">
@@ -46,7 +57,7 @@ export default function SettingsLayout({ children }) {
               className={`block p-2 rounded ${
                 pathname === "/AccountSettings"
                   ? "bg-blue-600 text-white"
-                  : "text-blue-600"
+                  : "text-black"
               }`}
             >
               Account Settings
@@ -58,7 +69,7 @@ export default function SettingsLayout({ children }) {
               className={`block p-2 rounded ${
                 pathname === "/HelpSupport"
                   ? "bg-blue-600 text-white"
-                  : "text-blue-600"
+                  : "text-black"
               }`}
             >
               Help & Support
