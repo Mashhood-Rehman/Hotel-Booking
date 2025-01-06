@@ -25,7 +25,7 @@ const ForgetPasswordForm = () => {
   };
 
   return (
-    <div className="max-w-sm mx-auto mt-12 p-6 bg-white rounded-lg shadow-md">
+    <div className="max-w-sm mx-auto h-96  py-80  bg-white rounded-lg shadow-md">
       <h1 className="text-3xl font-semibold text-center text-gray-800 mb-6">
         Forgot Password
       </h1>

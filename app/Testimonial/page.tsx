@@ -2,7 +2,6 @@
 import Image from "next/image";
 import React, { useState } from "react";
 import { Icon } from "@iconify/react";
-import { AccordionDemo } from "../../components/Accordion/page";
 
 const Testimonials: React.FC = () => {
   const testimonials = [
@@ -52,111 +51,92 @@ const Testimonials: React.FC = () => {
 
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  // Move to the previous testimonial
   const handlePrev = () => {
     setCurrentIndex((prevIndex) =>
-      prevIndex > 0 ? prevIndex - 1 : testimonials.length - 3
+      prevIndex > 0 ? prevIndex - 1 : testimonials.length - 1
     );
   };
 
-  // Move to the next testimonial
   const handleNext = () => {
     setCurrentIndex((prevIndex) =>
-      prevIndex < testimonials.length - 3 ? prevIndex + 1 : 0
+      prevIndex < testimonials.length - 1 ? prevIndex + 1 : 0
     );
   };
 
   return (
-    <>
-      <div className="pl-10 font-[sans-serif] mt-4 mb-10">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid lg:grid-cols-3 gap-12 max-lg:max-w-2xl">
-            <div className="col-span-2">
-              <h2 className="text-gray-800 text-3xl font-extrabold">
-                What our happy client say
-              </h2>
-            </div>
-
-            <div className="flex space-x-4 items-end justify-end">
-              {/* Previous Button */}
-              <div
-                className="bg-gray-200 w-10 h-10 grid items-center justify-center rounded-full rotate-90 shrink-0 cursor-pointer"
-                onClick={handlePrev}
-              >
-                <Icon
-                  icon="mdi:chevron-down"
-                  className="text-gray-800 text-lg"
-                />
-              </div>
-              {/* Next Button */}
-              <div
-                className="bg-blue-600 w-10 h-10 grid items-center justify-center rounded-full -rotate-90 shrink-0 cursor-pointer"
-                onClick={handleNext}
-              >
-                <Icon icon="mdi:chevron-down" className="text-white text-lg" />
-              </div>
-            </div>
-          </div>
-
-          <div className="overflow-hidden  mt-16">
-            <div
-              className="flex space-x-10 transition-transform duration-500 ease-in-out"
-              style={{
-                transform: `translateX(-${currentIndex * (360 + 24)}px)`,
-              }}
+    <div className="px-6 py-12 bg-gradient-to-b from-black via-gray-900 to-black text-[#c4a053] font-sans">
+      <div className="max-w-6xl mx-auto">
+        <div className="flex flex-col lg:flex-row justify-between items-center mb-10">
+          <h2 className="text-4xl font-extrabold text-center lg:text-left">
+            What Our Happy Clients Say
+          </h2>
+          <div className="flex space-x-4 mt-6 lg:mt-0">
+            <button
+              onClick={handlePrev}
+              className="w-10 h-10 flex items-center justify-center bg-[#c4a053] rounded-full hover:bg-opacity-80 transition"
             >
-              {testimonials.map((testimonial, index) => (
-                <div
-                  key={index}
-                  className="max-w-sm h-auto py-5 pl-14 pr-4 bg-white border-2 rounded-3xl relative flex-shrink-0"
-                >
+              <Icon icon="mdi:chevron-left" className="text-black text-xl" />
+            </button>
+            <button
+              onClick={handleNext}
+              className="w-10 h-10 flex items-center justify-center bg-[#c4a053] rounded-full hover:bg-opacity-80 transition"
+            >
+              <Icon icon="mdi:chevron-right" className="text-black text-xl" />
+            </button>
+          </div>
+        </div>
+
+        <div className="overflow-hidden">
+          <div
+            className="flex transition-transform duration-700 ease-in-out"
+            style={{
+              transform: `translateX(-${currentIndex * 100}%)`,
+            }}
+          >
+            {testimonials.map((testimonial, index) => (
+              <div
+                key={index}
+                className={`min-w-full p-8 transition-all ${
+                  index === currentIndex ? "scale-105" : "opacity-60"
+                }`}
+              >
+                <div className="relative bg-[#1f1f1f] border border-[#c4a053] rounded-3xl shadow-xl p-6">
                   <Image
                     src={testimonial.img}
                     alt={`${testimonial.name} avatar`}
-                    width={100}
-                    height={100}
-                    className="w-20 h-20 rounded-full absolute -left-10 top-0 bottom-0 my-auto border-2 border-gray-300"
+                    width={80}
+                    height={80}
+                    className="w-20 h-20 rounded-full absolute -top-4 left-6 border-4 border-[#c4a053] object-cover"
                   />
-
-                  <div>
-                    <h4 className="text-gray-800 text-base font-bold">
+                  <div className="mt-10 text-center">
+                    <h4 className="text-lg font-semibold">
                       {testimonial.name}
                     </h4>
-                    <p className="mt-1 text-xs text-gray-500">
-                      {testimonial.role}
-                    </p>
-                  </div>
-
-                  <div className="mt-4">
-                    <p className="text-gray-800 text-sm leading-relaxed">
+                    <p className="text-sm text-[#a39786]">{testimonial.role}</p>
+                    <p className="mt-4 text-sm text-[#e0d7c1]">
                       {testimonial.text}
                     </p>
-                  </div>
-
-                  {/* Star Ratings */}
-                  <div className="flex space-x-1 mt-4">
-                    {Array.from({ length: 5 }).map((_, starIndex) => (
-                      <Icon
-                        key={starIndex}
-                        icon="mdi:star"
-                        className={`w-4 h-4 ${
-                          starIndex < testimonial.stars
-                            ? "text-blue-600"
-                            : "text-gray-300"
-                        }`}
-                      />
-                    ))}
+                    <div className="flex justify-center mt-4">
+                      {Array.from({ length: 5 }).map((_, starIndex) => (
+                        <Icon
+                          key={starIndex}
+                          icon="mdi:star"
+                          className={`text-xl ${
+                            starIndex < testimonial.stars
+                              ? "text-[#c4a053]"
+                              : "text-gray-500"
+                          }`}
+                        />
+                      ))}
+                    </div>
                   </div>
                 </div>
-              ))}
-            </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>
-      <div className="container mx-auto my-4 p-0">
-        <AccordionDemo />
-      </div>
-    </>
+    </div>
   );
 };
 

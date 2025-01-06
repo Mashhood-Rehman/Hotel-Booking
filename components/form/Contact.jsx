@@ -51,14 +51,14 @@ const Contact = () => {
   };
 
   return (
-    <div className="font-[sans-serif] max-w-6xl max-lg:max-w-3xl mx-auto p-4">
+    <div className="font-[sans-serif]  mx-auto p-8 bg-black rounded-xl shadow-2xl">
       <motion.div
-        className="bg-blue-800 text-black shadow-xl rounded-lg p-8"
+        className="bg-black text-[#c4a053] shadow-xl rounded-lg p-32 transform transition-all hover:scale-105"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1 }}
       >
-        <h2 className="text-4xl text-white font-extrabold text-center mb-12">
+        <h2 className="text-4xl text-[#c4a053] font-extrabold text-center mb-8">
           Contact Us
         </h2>
 
@@ -72,47 +72,49 @@ const Contact = () => {
           <motion.input
             type="text"
             name="name"
-            placeholder="Name"
+            placeholder="Full Name"
             value={formData.name}
             onChange={handleInputChange}
-            className="w-full bg-gray-100 rounded py-3 px-6 text-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
+            className="w-full bg-[#2a2a2a] rounded-lg py-4 px-6 text-lg text-white focus:outline-none focus:ring-2 focus:ring-[#c4a053] focus:ring-offset-2 shadow-sm transition-all"
           />
           <motion.input
             type="email"
             name="email"
-            placeholder="Email"
+            placeholder="Email Address"
             value={formData.email}
             onChange={handleInputChange}
-            className="w-full bg-gray-100 rounded py-3 px-6 text-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
+            className="w-full bg-[#2a2a2a] rounded-lg py-4 px-6 text-lg text-white focus:outline-none focus:ring-2 focus:ring-[#c4a053] focus:ring-offset-2 shadow-sm transition-all"
           />
           <motion.input
             type="tel"
             name="phone"
-            placeholder="Phone No."
+            placeholder="Phone Number"
             value={formData.phone}
             onChange={handleInputChange}
-            className="w-full bg-gray-100 rounded py-3 px-6 text-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
+            className="w-full bg-[#2a2a2a] rounded-lg py-4 px-6 text-lg text-white focus:outline-none focus:ring-2 focus:ring-[#c4a053] focus:ring-offset-2 shadow-sm transition-all"
           />
           <motion.textarea
             name="message"
-            placeholder="Message"
+            placeholder="Your Message"
             rows="6"
             value={formData.message}
             onChange={handleInputChange}
-            className="w-full bg-gray-100 rounded px-6 text-sm pt-3 focus:outline-none focus:ring-2 focus:ring-blue-600"
+            className="w-full bg-[#2a2a2a] rounded-lg px-6 py-4 text-lg text-white focus:outline-none focus:ring-2 focus:ring-[#c4a053] focus:ring-offset-2 shadow-sm transition-all"
           ></motion.textarea>
+
           <motion.button
             type="submit"
-            className="text-black bg-blue-600 hover:bg-blue-700 rounded text-sm px-6 py-3 mt-6 flex items-center justify-center"
-            whileHover={{ scale: 1.1 }}
+            className="w-full text-black bg-[#c4a053] hover:bg-[#d4a54f] rounded-lg text-lg py-3 mt-6 flex items-center justify-center transition-all transform hover:scale-105"
+            whileHover={{ scale: 1.05 }}
             disabled={isSubmitting}
           >
-            <Icon icon="mdi:send" className="mr-2" />
+            <Icon icon="mdi:send" className="mr-3" />
             {isSubmitting ? "Sending..." : "Send Message"}
           </motion.button>
+
           {statusMessage && (
             <p
-              className={`mt-4 text-sm ${
+              className={`mt-4 text-sm font-medium text-center ${
                 statusMessage.includes("successfully")
                   ? "text-green-500"
                   : "text-red-500"

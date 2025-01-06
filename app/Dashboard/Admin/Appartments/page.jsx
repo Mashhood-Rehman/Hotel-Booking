@@ -20,7 +20,7 @@ const Page = async () => {
 
   return (
     <AdminLayout>
-      <h1 className="text-2xl font-bold">Appartments</h1>
+      <h1 className="text-2xl mt-24 font-bold">Appartments</h1>
       <p className="text-gray-600 mb-4">Manage all appartments from here</p>
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold">Appartments</h1>

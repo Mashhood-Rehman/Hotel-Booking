@@ -32,7 +32,7 @@
   "pages/api/verifyOtp.js",
   "pages/api/user.js",
   "pages/api/sendOtp.js"
-],
+, "lib/auth.ts"],
 
  "exclude": ["node_modules"]
 }
