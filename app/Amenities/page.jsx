@@ -1,59 +1,50 @@
 import Image from "next/image";
 import React from "react";
 
-const page = () => {
+const Page = () => {
   const amenities = [
-    { name: "Pick Up & Drop", Imgsrc: "/pickup.webp", alt: "Pic" },
-    { name: "Free-Wifi", Imgsrc: "/Wifi.webp", alt: "Wifi" },
-    { name: "Pick Up & Drop", Imgsrc: "/pickup.webp", alt: "Pic" },
-    { name: "Free-Wifi", Imgsrc: "/Wifi.webp", alt: "Wifi" },
-    { name: "Pick Up & Drop", Imgsrc: "/pickup.webp", alt: "Pic" },
-    { name: "Free-Wifi", Imgsrc: "/Wifi.webp", alt: "Wifi" },
+    { name: "Pick Up & Drop", Imgsrc: "/pickup.webp", alt: "Pick-up & Drop" },
+    { name: "Free-Wifi", Imgsrc: "/Wifi.webp", alt: "Free Wifi" },
+    { name: "Pick Up & Drop", Imgsrc: "/pickup.webp", alt: "Pick-up & Drop" },
+    { name: "Free-Wifi", Imgsrc: "/Wifi.webp", alt: "Free Wifi" },
+    { name: "Pick Up & Drop", Imgsrc: "/pickup.webp", alt: "Pick-up & Drop" },
+    { name: "Free-Wifi", Imgsrc: "/Wifi.webp", alt: "Free Wifi" },
   ];
 
   return (
-    <div className="bg-black p-24 ">
-      {/* first div */}
-      <div className=" flex items-center justify-between">
-        <div className="flex  items-center justify-evenly mb-8">
-          <div className="space-y-4">
-            <h1 className="text-[#c4a053] text-lg tracking-wider">
-              Our Services
-            </h1>
-            <h1 className="text-white text-4xl">AMENITIES</h1>
-            <p className="w-96 text-gray-400">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Necessitatibus nulla error fugiat unde illo placeat?
-            </p>
-          </div>
-        </div>
+    <div className="bg-black py-16 px-6 lg:px-24">
+      {/* Header Section */}
+      <div className="text-center mb-12">
+        <h1 className="text-[#c4a053] text-lg tracking-wider mb-2">
+          Our Services
+        </h1>
+        <h2 className="text-white text-4xl font-bold mb-4">AMENITIES</h2>
+        <p className="text-gray-400 max-w-xl mx-auto">
+          Explore the exclusive amenities we offer to make your stay
+          unforgettable. From convenience to luxury, we’ve got you covered.
+        </p>
+      </div>
 
-        {/* second div */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 grid-rows-1 lg:grid-rows-2  space-x-2 space-y-2">
-          {amenities.map((item, index) => {
-            return (
-              <div
-                key={index}
-                className="flex flex-col items-center justify-center space-y-4 bg-gray-700 hover:bg-[#c4a053] duration-300 ease-in-out p-6 rounded-md w-40   h-40"
-              >
-                <div className="flex items-center justify-center mb-4">
-                  <Image
-                    src={item.Imgsrc}
-                    alt={item.alt}
-                    height={50}
-                    width={50}
-                    className="object-contain"
-                  />
-                </div>
-                <p className="text-white text-center">{item.name}</p>
-              </div>
-            );
-          })}
-        </div>
-        <div></div>
+      {/* Amenities Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 lg:gap-12">
+        {amenities.map((item, index) => (
+          <div
+            key={index}
+            className="flex flex-col items-center justify-center bg-gray-800 hover:bg-[#c4a053] duration-300 ease-in-out p-6 rounded-lg shadow-md"
+          >
+            <Image
+              src={item.Imgsrc}
+              alt={item.alt}
+              height={60}
+              width={60}
+              className="object-contain mb-4"
+            />
+            <p className="text-white font-semibold text-center">{item.name}</p>
+          </div>
+        ))}
       </div>
     </div>
   );
 };
 
-export default page;
+export default Page;

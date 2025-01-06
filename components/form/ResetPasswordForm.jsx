@@ -2,6 +2,7 @@
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 const ResetPasswordForm = () => {
   const searchParams = useSearchParams();
@@ -10,10 +11,10 @@ const ResetPasswordForm = () => {
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
+  const router = useRouter();
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-
     if (!token) {
       setMessage("Token is missing or invalid.");
       setLoading(false);
@@ -25,7 +26,9 @@ const ResetPasswordForm = () => {
         token,
         newPassword,
       });
+
       setMessage(res.data.message || "Error");
+      router.push("/SignIn");
     } catch (error) {
       setMessage("Something went wrong!");
       console.error(error);
@@ -35,7 +38,7 @@ const ResetPasswordForm = () => {
   };
 
   return (
-    <div className="max-w-sm mx-auto mt-12 p-6 bg-white rounded-lg shadow-md">
+    <div className="max-w-sm mx-auto h-96 py-80 p-6 bg-white rounded-lg shadow-md">
       <h1 className="text-3xl font-semibold text-center text-gray-800 mb-6">
         Reset Password
       </h1>

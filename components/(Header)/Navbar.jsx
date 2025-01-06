@@ -31,21 +31,10 @@ const Navbar = () => {
 
   const toggleSidebar = () => setSidebarOpen(!isSidebarOpen);
 
-  useEffect(() => {
-    if (status === "loading") {
-      console.log("Session is loading...");
-    }
-    if (status === "authenticated") {
-      console.log("Session is authenticated", session);
-    }
-    if (status === "unauthenticated") {
-      console.log("No session available.");
-    }
-  }, [status, session]);
+  useEffect(() => {}, [status, session]);
 
   return (
     <div>
-      {/* Sidebar Toggle Button and Logo in Flex */}
       <div
         className={`${bgColor} duration-500 ease-in-out flex fixed z-50  items-center justify-between w-full p-12`}
       >
@@ -79,6 +68,7 @@ const Navbar = () => {
       </div>
 
       {/* Sidebar */}
+      {/* Sidebar */}
       <motion.div
         initial={{ x: "-100%", opacity: 0 }}
         animate={{
@@ -86,16 +76,16 @@ const Navbar = () => {
           opacity: isSidebarOpen ? 1 : 0,
         }}
         transition={{ type: "tween", ease: "easeOut", duration: 0.5 }}
-        className="fixed top-0 left-0 w-screen h-full bg-black text-white z-40 shadow-lg"
+        className="fixed top-0 left-0 w-screen h-full bg-black text-white z-40 shadow-lg flex items-center justify-center lg:items-center lg:justify-center"
       >
-        <div className="flex flex-col p-6 space-y-4">
+        <div className="p-6 lg:p-0 space-y-10 text-center">
           {/* Navigation Links */}
-          <ul className="space-y-4 mt-24">
+          <ul className="space-y-4 mt-24 lg:mt-0 grid grid-cols-1 lg:grid-cols-3 lg:grid-rows-2 gap-4 items-center justify-center">
             {navdData.map((item, index) => (
               <li key={index}>
                 <Link
                   href={item.href}
-                  className="block text-lg hover:text-[#c4a053] transition-colors"
+                  className="block text-lg lg:text-4xl font-thin hover:text-[#c4a053] transition-colors"
                   onClick={toggleSidebar}
                 >
                   {item.name}
@@ -107,19 +97,16 @@ const Navbar = () => {
           {/* User Section */}
           <div className="mt-10">
             {session ? (
-              <div className="group relative">
-                <div className="flex  items-center">
-                  <Image
-                    src={session.user.image || "/default-avatar.png"}
-                    alt="User Profile Image"
-                    height={50}
-                    width={50}
-                    className="rounded-full  transition-all duration-300 ease-in-out"
-                  />
-                </div>
-
+              <div className="group relative flex flex-col items-center">
+                <Image
+                  src={session.user.image || "/default-avatar.png"}
+                  alt="User Profile Image"
+                  height={50}
+                  width={50}
+                  className="rounded-full transition-all duration-300 ease-in-out"
+                />
                 <div
-                  className={`absolute left-2 mt-2 w-40 bg-gray-800 text-white rounded-lg p-2 transition-all duration-300 ease-in-out opacity-0 group-hover:opacity-100 `}
+                  className={`absolute top-12 bg-gray-800 text-white rounded-lg p-2 transition-all duration-300 ease-in-out opacity-0 group-hover:opacity-100`}
                 >
                   <h1 className="text-white">{session.user.name}</h1>
                   <div className="flex items-center space-x-2">

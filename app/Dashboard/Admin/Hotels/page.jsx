@@ -17,7 +17,7 @@ const Page = async () => {
   const { hotel = [], error = null } = await fetchUsers();
   return (
     <AdminLayout>
-      <h1 className="text-2xl font-bold">Hotel Management</h1>
+      <h1 className="text-2xl mt-24 font-bold">Hotel Management</h1>
       <p className="text-gray-600 mb-4">Manage all Hotels from here.</p>
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold">Hotels</h1>

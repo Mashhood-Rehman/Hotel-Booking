@@ -72,7 +72,7 @@ export const authOptions: NextAuthOptions = {
         token.email = user.email;
         if ('role' in user) {
           token.role = user.role || "USER";
-        }
+        } 
       }
       return token;
     },
